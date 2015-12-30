@@ -38,7 +38,7 @@ entity altremote_pulsed is
     (
         clk     : in  std_ulogic;
 	reset   : in  std_ulogic;
-	pulse   : in  std_ulogic
+	reconf  : in  std_ulogic  -- One clock cycle high => Reconf
     );
 end entity altremote_pulsed;
 
@@ -110,7 +110,7 @@ begin
         busy                => ar_busy,
         data_out            => open
     );
-    
+
     eALTREMOTE_CLK: entity work.frequency_divider(rtl)
         generic map
         (
@@ -123,34 +123,37 @@ begin
             strobe_output => clk_3
         );
 
-    proc_comb: process(R, pulse)
+    proc_comb: process(R, reconf)
     begin
-    
+
         NxR <= R;
-        
+
         -- standard values
         ar_data_in <= (others => '0');
         ar_param <= "000";
         ar_write_param <= '0';
+        ar_reconfig <= '0';
         ar_reset <= '0';
 
-        -- module specific part
+        -- fsm
         case R.sm_step is
             when SM_IDLE =>
-                null;
-        
+                if(reconf = '1')then
+                   ar_reconfig <= '1';
+                end if;
+
             when SM_INIT =>
                 NxR.sm_step <= SM_SET_RESET;
 
             when SM_SET_RESET =>
                 ar_reset <= '1';
-                
+
                 if(R.ar_reset_cnt = 15)then
                     NxR.sm_step <= SM_WRITE_BOOT_ADDRESS;
                 else
                     NxR.ar_reset_cnt <= R.ar_reset_cnt + 1;
                 end if;
-                
+
             when SM_WRITE_BOOT_ADDRESS =>
                 NxR.param <= "100";
                 NxR.data_in <= (others => '0');
@@ -173,7 +176,7 @@ begin
                 ar_param <= R.param;
                 ar_data_in <= R.data_in;
                 ar_write_param <= '1';
-                
+
                 if(ar_busy = '1')then
                     NxR.sm_step <= SM_WAIT_BUSY;
                 end if;
