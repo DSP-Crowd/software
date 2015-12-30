@@ -57,7 +57,8 @@ entity tbd_rr_base is
 		sdram_cke         : out   std_logic;
 		sdram_clk         : out   std_logic;
 		sdram_cs_n        : out   std_logic;
-		sdram_dq          : inout std_logic_vector(15 downto 0);
+		--sdram_dq          : inout std_logic_vector(15 downto 0);
+		sdram_dq          : in    std_logic_vector(15 downto 0);
 		sdram_dqm         : out   std_logic_vector(1 downto 0);
 		sdram_cas_n       : out   std_logic;
 		sdram_ras_n       : out   std_logic;
