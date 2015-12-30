@@ -27,6 +27,7 @@
 # *.v
 
 # ignore Quartus II generated files
+*.rbf
 *_generation_script*
 *_inst.vhd
 *.bak
