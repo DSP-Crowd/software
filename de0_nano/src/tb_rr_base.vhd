@@ -31,10 +31,10 @@ library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 
-entity tb_de0_nano_linux is
-end tb_de0_nano_linux;
+entity tb_rr_base is
+end tb_rr_base;
 
-architecture bhv of tb_de0_nano_linux is
+architecture bhv of tb_rr_base is
 
 	----------------------------------------------------------------------------------
 	-- Constants
