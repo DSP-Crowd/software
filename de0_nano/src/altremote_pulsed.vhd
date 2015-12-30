@@ -61,39 +61,31 @@ architecture rtl of altremote_pulsed is
         );
     end component;
 
-    constant USR_CONFIGREG      : natural := 3;
-    constant USR_CONFIG_ALTREMOTE_RECONF : natural := 0;
-    
-    subtype byte is std_logic_vector(7 downto 0);
-    type REGISTER_SET_TYPE is array (0 to 7) of byte;
     type STATEMACHINE_STEP_TYPE is
     (
         SM_INIT, SM_SET_RESET, SM_WRITE_BOOT_ADDRESS, SM_TURN_OFF_WDT, SM_SET_EARLY_CONF_DONE_CHECK, SM_WRITE_PARAM, SM_WAIT_BUSY, SM_IDLE
     );
 
     type REG_TYPE is record
-        rset                : REGISTER_SET_TYPE;
         sm_step             : STATEMACHINE_STEP_TYPE;
         sm_step_ret         : STATEMACHINE_STEP_TYPE;
         param               : std_logic_vector(2 downto 0);
         data_in             : std_logic_vector(21 downto 0);
         ar_reset_cnt        : natural;
     end record;
-    
+
     constant RSET_INIT_VAL : REG_TYPE :=
     (
-        rset                => (others => (others => '0')),
         sm_step             => SM_INIT,
         sm_step_ret         => SM_INIT,
         param               => "000",
         data_in             => (others => '0'),
         ar_reset_cnt        => 0
     );
-    
+
     signal R, NxR           : REG_TYPE;
-    signal rstint           : std_ulogic;
     signal clk_3            : std_ulogic;
-    
+
     signal ar_data_in       : std_logic_vector(21 downto 0);
     signal ar_param         : std_logic_vector(2 downto 0);
     signal ar_reconfig      : std_logic;
@@ -119,16 +111,16 @@ begin
         data_out            => open
     );
     
-    eALTREMOTE_CLK: entity work.FreqDivider(Rtl)
+    eALTREMOTE_CLK: entity work.frequency_divider(rtl)
         generic map
         (
-            gDivideBy    => 16
+            divide_by     => 16
         )
         port map
         (
-            iClk         => clk,
-            inResetAsync => rstint,
-            oDivdClk     => clk_3
+            clock         => clk,
+            n_reset_async => reset,
+            strobe_output => clk_3
         );
 
     proc_comb: process(R, pulse)
@@ -140,58 +132,7 @@ begin
         ar_data_in <= (others => '0');
         ar_param <= "000";
         ar_write_param <= '0';
-        ar_reconfig <= R.rset(USR_CONFIGREG)(USR_CONFIG_ALTREMOTE_RECONF);
         ar_reset <= '0';
-
-        -- write memory mapped addresses
-        if((extsel = '1') and (exti.write_en = '1'))then
-            case exti.addr(4 downto 2) is
-                when "000" =>
-                    if((exti.byte_en(0) = '1') or (exti.byte_en(1) = '1'))then
-                        NxR.rset(STATUSREG)(STA_INT) <= '1';
-                        NxR.rset(CONFIGREG)(CONF_INTA) <= '0';
-                    else
-                        if(exti.byte_en(2) = '1')then
-                            NxR.rset(CONFIGREG) <= exti.data(23 downto 16);
-                        end if;
-                        if(exti.byte_en(3) = '1')then
-                            NxR.rset(USR_CONFIGREG) <= exti.data(31 downto 24);
-                        end if;
-                    end if;
-
-                when others =>
-                    null;
-            end case;
-        end if;
-        
-        -- read memory mapped addresses
-        exto.data <= (others => '0');
-        if((extsel = '1') and (exti.write_en = '0'))then
-            case exti.addr(4 downto 2) is
-                when "000" =>
-                    exto.data <= R.rset(3) & R.rset(2) & R.rset(1) & R.rset(0);
-                when "001" =>
-                    if(R.rset(CONFIGREG)(CONF_ID) = '1')then
-                        exto.data <= MODULE_VER & MODULE_ID;
-                    else
-                        exto.data <= R.rset(7) & R.rset(6) & R.rset(5) & R.rset(4);
-                    end if;
-                when others =>
-                    null;
-            end case;
-        end if;
-        
-        -- compute status flags
-        NxR.rset(STATUSREG)(STA_LOOR) <= R.rset(CONFIGREG)(CONF_LOOW);
-        NxR.rset(STATUSREG)(STA_FSS) <= '0';
-        NxR.rset(STATUSREG)(STA_RESH) <= '0';
-        NxR.rset(STATUSREG)(STA_RESL) <= '0';
-        NxR.rset(STATUSREG)(STA_BUSY) <= '0';
-        NxR.rset(STATUSREG)(STA_ERR) <= '0';
-        NxR.rset(STATUSREG)(STA_RDY) <= '1';
-        
-        -- set output enabled (default)
-        NxR.rset(CONFIGREG)(CONF_OUTD) <= '1';
 
         -- module specific part
         case R.sm_step is
@@ -247,24 +188,12 @@ begin
                 null;
         end case;
 
-        -- combine soft- and hard-reset
-        rstint <= not RST_ACT;
-        if((exti.reset = RST_ACT) or (R.rset(CONFIGREG)(CONF_SRES) = '1'))then
-            rstint <= RST_ACT;
-        end if;
-
-        -- reset interrupt
-        if((R.rset(STATUSREG)(STA_INT) = '1') and (R.rset(CONFIGREG)(CONF_INTA) = '0'))then
-            NxR.rset(STATUSREG)(STA_INT) <= '0';
-        end if;
-        exto.intreq <= R.rset(STATUSREG)(STA_INT);
-
     end process;
 
     proc_reg: process(clk)
     begin
         if((clk'event) and (clk = '1'))then
-            if(reset = RST_ACT)then
+            if(reset = '0')then
                 R <= RSET_INIT_VAL;
             else
                 R <= NxR;
