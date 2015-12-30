@@ -204,4 +204,4 @@ begin
         end if;
     end process;
 
-end architecture Rtl;
+end architecture rtl;
