@@ -47,7 +47,7 @@ entity tbd_rr_base is
 		uart_rx           : in    std_ulogic;
 		uart_tx           : out   std_ulogic;
 
-		spi_cs            : in    std_ulogic_vector(2 downto 0);
+		spi_cs            : in    std_ulogic_vector(1 downto 0);
 		spi_clk           : in    std_ulogic;
 		spi_mosi          : in    std_ulogic;
 		spi_miso          : out   std_ulogic;
