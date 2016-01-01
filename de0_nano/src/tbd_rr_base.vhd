@@ -128,7 +128,7 @@ begin
 	hardware_is_alive_led: entity work.frequency_divider(rtl)
 	generic map
 	(
-		divide_by     => 25E7
+		divide_by     => 25E6
 	)
 	port map
 	(
