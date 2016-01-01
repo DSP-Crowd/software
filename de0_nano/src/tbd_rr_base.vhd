@@ -39,19 +39,26 @@ entity tbd_rr_base is
 	port
 	(
 		clock_50mhz       : in    std_ulogic;
+
 		keys              : in    std_ulogic_vector(1 downto 0);
 		switches          : in    std_ulogic_vector(3 downto 0);
 		leds              : out   std_ulogic_vector(7 downto 0);
+
 		uart_rx           : in    std_ulogic;
 		uart_tx           : out   std_ulogic;
-		spi_cs            : out   std_ulogic_vector(3 downto 0);
-		spi_miso          : in    std_ulogic;
-		spi_mosi          : out   std_ulogic;
-		spi_clk           : out   std_ulogic;
-		spi_epcs_miso     : in    std_ulogic;
-		spi_epcs_mosi     : out   std_ulogic;
+
+		spi_cs            : in    std_ulogic_vector(2 downto 0);
+		spi_clk           : in    std_ulogic;
+		spi_mosi          : in    std_ulogic;
+		spi_miso          : out   std_ulogic;
+
+		spi_epcs_cs       : out   std_ulogic;
 		spi_epcs_clk      : out   std_ulogic;
+		spi_epcs_mosi     : out   std_ulogic;
+		spi_epcs_miso     : in    std_ulogic;
+
 		enc_clk           : out   std_ulogic;
+
 		sdram_addr        : out   std_logic_vector(12 downto 0);
 		sdram_ba          : out   std_logic_vector(1 downto 0);
 		sdram_cke         : out   std_logic;
@@ -77,6 +84,13 @@ architecture rtl of tbd_rr_base is
 	signal switches_synced_debounced : std_ulogic_vector(switches'range);
 
 begin
+
+	-- Give epcs16 signals to external user
+	-- No need to synchronize. Signals are not used within system clock
+	spi_epcs_cs <= spi_cs(0);
+	spi_epcs_clk <= spi_clk;
+	spi_epcs_mosi <= spi_mosi;
+	spi_miso <= spi_epcs_miso;
 
 	-- Synchronize inputs
 	inputs_unsynced <=  switches & keys(0);
