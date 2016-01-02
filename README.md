@@ -13,4 +13,4 @@ This repository includes one project for each board
   - Two different LED blink sequences
 - Raspberry Pi Zero
   - GPIO pulse generator
-  - Driver for configuration chip
+  - DTS file for EPCS64
