@@ -9,6 +9,7 @@ dtc_bin = ../../rpi_linux_build/src/linux/scripts/dtc/dtc
 dtc_opt = -I dts -O dtb -b 0 -@
 
 all: $(obj)
+	fdtdump $(obj)
 
 $(obj_dir)/%.dtb: $(src_dir)/%.dts
 	$(dtc_bin) $(dtc_opt) -o $@ $<
