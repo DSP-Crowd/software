@@ -23,7 +23,7 @@
 				 * { "epcs64",           INFO(0, 0,  256 * 256,  32, 0) },
 				 * { "m25p16-nonjedec",  INFO(0, 0,  64 * 1024,  32, 0) },
 				 */
-				compatible = "m25p16-nonjedec";
+				compatible = "micron,m25p16-nonjedec", "spi-nor";
 				reg = <1>; /* CE1 */
 				spi-max-frequency = <12000000>;
 				status = "okay";
