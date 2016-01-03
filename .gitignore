@@ -55,6 +55,10 @@
 *~
 *example*
 *sopc_*
+*.jic
+*.map
+*.rpd
+*.cdf
 # *.sdc # I want those timing files
 
 # ignore Quartus II generated folders
