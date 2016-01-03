@@ -71,3 +71,6 @@ testbench/
 
 # ignore dtb files
 *.dtb
+
+# ignore binary files
+*.bin
