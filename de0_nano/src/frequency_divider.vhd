@@ -31,20 +31,59 @@ library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 
-entity frequency_divider is
+use work.global.all;
+
+entity frequencyDivider is
 	generic
 	(
-		divide_by      : integer := 2
+		divideBy	: integer := 2
 	);
 	port
 	(
-		clock         : in  std_ulogic;
-		n_reset_async : in  std_ulogic;
-		strobe_output : out std_ulogic
+		clock		: in  std_ulogic;
+		nResetAsync	: in  std_ulogic;
+		output		: out std_ulogic
 	);
-end frequency_divider;
 
-architecture rtl of frequency_divider is
 begin
-end architecture rtl;
 
+	assert (divideBy >= 4)
+		report "frequencyDivider: divideBy must be at least 4"
+		severity error;
+
+	assert (divideBy rem 2 = 0)
+		report "frequencyDivider: divideBy must be an even number"
+		severity error;
+
+end frequencyDivider;
+
+architecture rtl of frequencyDivider is
+
+	constant cHalfPeriodCounter : natural := divideBy / 2;
+	signal counter : unsigned(logDualis(cHalfPeriodCounter) - 1 downto 0);
+	signal sOutput : std_ulogic;
+
+begin
+
+	procReset: process(nResetAsync, clock)
+	begin
+		if(nResetAsync = '0')then
+
+			counter <= (others => '0');
+			sOutput <= '0';
+
+		elsif(clock'event and clock = '1')then
+
+			if(counter = cHalfPeriodCounter - 1)then
+				counter <= (others => '0');
+				sOutput <= not(sOutput);
+			else
+				counter <= counter + 1;
+			end if;
+
+		end if;
+	end process;
+
+	output <= sOutput;
+
+end architecture rtl;

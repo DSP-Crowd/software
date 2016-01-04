@@ -31,31 +31,51 @@ library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 
-package global is
+entity frequencyDividerTb is
+end frequencyDividerTb;
 
-	---------------------------------------------------------------------
-	-- Functions
-	---------------------------------------------------------------------
-	function logDualis(number : natural) return natural;
+architecture rtl of frequencyDividerTb is
 
-end global;
+	----------------------------------------------------------------------------------
+	-- Constants
+	----------------------------------------------------------------------------------
+	constant cSystemClock	: natural := 50E6;
+	constant cDivider1	: natural := 4;
+	constant cDivider2	: natural := 6;
+	signal clock		: std_ulogic := '0';
+	signal reset		: std_ulogic := '0';
+	signal dutOutput1	: std_ulogic;
+	signal dutOutput2	: std_ulogic;
 
-package body global is
+begin
 
-	---------------------------------------------------------------------
-	-- returns the logarithm of base 2
-	function logDualis(number : natural) return natural is
-		variable neededBits : natural := 0;
-		variable runningBit : natural := 1;
-	begin
-		while runningBit < number loop
-			neededBits := neededBits + 1;
-			runningBit := runningBit * 2;
-		end loop;
+	clock <= not clock after 1E9 ns / (2 * cSystemClock);
+	reset <= '1' after 200 ns;
 
-		return neededBits;
-	end logDualis;
-	---------------------------------------------------------------------
+	-- DUT
+	DUT1: entity work.frequencyDivider(rtl)
+	generic map
+	(
+		divideBy	=> cDivider1
+	)
+	port map
+	(
+		clock		=> clock,
+		nResetAsync	=> reset,
+		output		=> dutOutput1
+	);
 
-end global;
+	DUT2: entity work.frequencyDivider(rtl)
+	generic map
+	(
+		divideBy	=> cDivider2
+	)
+	port map
+	(
+		clock		=> clock,
+		nResetAsync	=> reset,
+		output		=> dutOutput2
+	);
+
+end architecture rtl;
 

@@ -125,16 +125,16 @@ begin
 	switches_synced_debounced <= inputs_synced_debounced(inputs_synced_debounced'high downto 1);
 
 	-- Hardware-is-alive-LED
-	hardware_is_alive_led: entity work.frequency_divider(rtl)
+	hardware_is_alive_led: entity work.frequencyDivider(rtl)
 	generic map
 	(
-		divide_by     => 25E6
+		divideBy	=> 25E6
 	)
 	port map
 	(
-		clock         => clock_50mhz,
-		n_reset_async => n_reset_async,
-		strobe_output => leds(leds'high)
+		clock		=> clock_50mhz,
+		nResetAsync	=> n_reset_async,
+		output		=> leds(leds'high)
 	);
 
 	-- Reset

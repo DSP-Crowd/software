@@ -36,9 +36,9 @@ use altera_mf.altera_mf_components.all;
 entity altremote_pulsed is
     port
     (
-        clk     : in  std_ulogic;
-	reset   : in  std_ulogic;
-	reconf  : in  std_ulogic  -- One clock cycle high => Reconf
+        clock		: in  std_ulogic;
+	nResetAsync	: in  std_ulogic;
+	reconf		: in  std_ulogic  -- One clock cycle high => Reconf
     );
 end entity altremote_pulsed;
 
@@ -111,16 +111,16 @@ begin
         data_out            => open
     );
 
-    eALTREMOTE_CLK: entity work.frequency_divider(rtl)
+    eALTREMOTE_CLK: entity work.frequencyDivider(rtl)
         generic map
         (
-            divide_by     => 16
+            divideBy		=> 16
         )
         port map
         (
-            clock         => clk,
-            n_reset_async => reset,
-            strobe_output => clk_3
+            clock		=> clock,
+            nResetAsync		=> nResetAsync,
+            output		=> clk_3
         );
 
     proc_comb: process(R, reconf)
@@ -193,15 +193,13 @@ begin
 
     end process;
 
-    proc_reg: process(clk)
-    begin
-        if((clk'event) and (clk = '1'))then
-            if(reset = '0')then
-                R <= RSET_INIT_VAL;
-            else
-                R <= NxR;
-            end if;
-        end if;
-    end process;
+	proc_reg: process(nResetAsync, clock)
+	begin
+		if(nResetAsync = '0')then
+			R <= RSET_INIT_VAL;
+		elsif(clock'event and clock = '1')then
+			R <= NxR;
+		end if;
+	end process;
 
 end architecture rtl;
