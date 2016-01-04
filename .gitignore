@@ -79,5 +79,7 @@ testbench/
 # ignore binary files
 *.bin
 
-# ignore modelsim work directory
+# ignore modelsim temp files
 work/
+transcript
+*.wlf
