@@ -29,11 +29,10 @@
 # -----------------------------------------------------------------------------
 # -----------------------------------------------------------------------------
 
-src_root=../../src/verilog
+src_root=../../src
 
 vlib work
 vmap work work
 
-vlog ${src_root}/strobe_gen.v
-vlog ${src_root}/tb_strobe_gen.v
-
+vcom ${src_root}/frequency_divider.vhd
+vcom ${src_root}/frequency_divider_tb.vhd
