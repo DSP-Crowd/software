@@ -1,7 +1,12 @@
 #!/bin/sh
 
 mdev=/dev/mtd0
-rfile=rr_base.bin
+
+if [ "$1" = "" ]; then
+	rfile=rr_base.bin
+else
+	rfile=$1
+fi
 
 flash_erase ${mdev} 0 6
 dd if=${rfile} of=${mdev}
