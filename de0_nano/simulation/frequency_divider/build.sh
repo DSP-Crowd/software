@@ -35,5 +35,6 @@ vlib work
 vmap work work
 
 vcom ${src_root}/global_pkg.vhd
+
 vcom ${src_root}/frequency_divider.vhd
 vcom ${src_root}/frequency_divider_tb.vhd
