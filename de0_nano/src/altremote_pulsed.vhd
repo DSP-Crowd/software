@@ -33,33 +33,34 @@ use ieee.std_logic_1164.all;
 library altera_mf;
 use altera_mf.altera_mf_components.all;
 
-entity altremote_pulsed is
+use work.global.all;
+
+entity altremotePulsed is
     port
     (
         clock		: in  std_ulogic;
 	nResetAsync	: in  std_ulogic;
 	reconf		: in  std_ulogic  -- One clock cycle high => Reconf
     );
-end entity altremote_pulsed;
+end entity altremotePulsed;
 
-architecture rtl of altremote_pulsed is
+architecture rtl of altremotePulsed is
 
-    component altremote
-        port
-        (
-            clock           : in  std_logic;
-            data_in         : in  std_logic_vector(21 downto 0);
-            param           : in  std_logic_vector(2 downto 0);
-            read_param      : in  std_logic;
-            read_source     : in  std_logic_vector(1 downto 0);
-            reconfig        : in  std_logic;
-            reset           : in  std_logic;
-            reset_timer     : in  std_logic;
-            write_param     : in  std_logic;
-            busy            : out std_logic;
-            data_out        : out std_logic_vector(28 downto 0)
-        );
-    end component;
+	component altremote is
+		port (
+			read_param  : in  std_logic                     := 'X';             -- read_param
+			param       : in  std_logic_vector(2 downto 0)  := (others => 'X'); -- param
+			reconfig    : in  std_logic                     := 'X';             -- reconfig
+			reset_timer : in  std_logic                     := 'X';             -- reset_timer
+			clock       : in  std_logic                     := 'X';             -- clk
+			reset       : in  std_logic                     := 'X';             -- reset
+			busy        : out std_logic;                                        -- busy
+			data_out    : out std_logic_vector(28 downto 0);                    -- data_out
+			read_source : in  std_logic_vector(1 downto 0)  := (others => 'X'); -- read_source
+			write_param : in  std_logic                     := 'X';             -- write_param
+			data_in     : in  std_logic_vector(23 downto 0) := (others => 'X')  -- data_in
+		);
+	end component altremote;
 
     type STATEMACHINE_STEP_TYPE is
     (
@@ -70,7 +71,7 @@ architecture rtl of altremote_pulsed is
         sm_step             : STATEMACHINE_STEP_TYPE;
         sm_step_ret         : STATEMACHINE_STEP_TYPE;
         param               : std_logic_vector(2 downto 0);
-        data_in             : std_logic_vector(21 downto 0);
+        data_in             : std_logic_vector(23 downto 0);
         ar_reset_cnt        : natural;
     end record;
 
@@ -86,7 +87,7 @@ architecture rtl of altremote_pulsed is
     signal R, NxR           : REG_TYPE;
     signal clk_3            : std_ulogic;
 
-    signal ar_data_in       : std_logic_vector(21 downto 0);
+    signal ar_data_in       : std_logic_vector(23 downto 0);
     signal ar_param         : std_logic_vector(2 downto 0);
     signal ar_reconfig      : std_logic;
     signal ar_reset         : std_logic;
@@ -123,7 +124,7 @@ begin
             output		=> clk_3
         );
 
-    proc_comb: process(R, reconf)
+    proc_comb: process(R, reconf, ar_busy)
     begin
 
         NxR <= R;

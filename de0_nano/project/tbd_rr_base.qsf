@@ -170,6 +170,13 @@ set_instance_assignment -name CURRENT_STRENGTH_NEW DEFAULT -to SPI_EPCS_MOSI
 #============================================================
 # ENC Osc1
 #============================================================
+set_location_assignment PIN_A4 -to ARRECONF
+
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to ARRECONF
+
+#============================================================
+# ENC Osc1
+#============================================================
 set_location_assignment PIN_D9 -to ENC_CLK
 
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to ENC_CLK
@@ -307,6 +314,10 @@ set_global_assignment -name GENERATE_RBF_FILE ON
 
 
 
+
+
+
+set_global_assignment -name QIP_FILE altremote/synthesis/altremote.qip
 set_global_assignment -name VHDL_FILE ../src/altremote_pulsed.vhd
 set_global_assignment -name VHDL_FILE ../src/tbd_rr_base.vhd
 set_global_assignment -name VHDL_FILE ../src/input_debounce.vhd
@@ -315,6 +326,4 @@ set_global_assignment -name VHDL_FILE ../src/global_pkg.vhd
 set_global_assignment -name VHDL_FILE ../src/frequency_divider.vhd
 set_global_assignment -name VHDL_FILE ../src/strobe_gen.vhd
 set_global_assignment -name SDC_FILE tbd_rr_base.sdc
-
-
 set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top

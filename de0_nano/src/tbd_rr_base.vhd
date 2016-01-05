@@ -34,42 +34,44 @@ use ieee.numeric_std.all;
 entity tbd_rr_base is
 	generic
 	(
-		use_sdram_pll : std_ulogic := '1'
+		use_sdram_pll	: std_ulogic := '1'
 	);
 	port
 	(
-		clock_50mhz       : in    std_ulogic;
+		clock_50mhz	: in    std_ulogic;
 
-		keys              : in    std_ulogic_vector(1 downto 0);
-		switches          : in    std_ulogic_vector(3 downto 0);
-		leds              : out   std_ulogic_vector(7 downto 0);
+		keys		: in    std_ulogic_vector(1 downto 0);
+		switches	: in    std_ulogic_vector(3 downto 0);
+		leds		: out   std_ulogic_vector(7 downto 0);
 
-		uart_rx           : in    std_ulogic;
-		uart_tx           : out   std_ulogic;
+		uart_rx		: in    std_ulogic;
+		uart_tx		: out   std_ulogic;
 
-		spi_cs            : in    std_ulogic_vector(1 downto 0);
-		spi_clk           : in    std_ulogic;
-		spi_mosi          : in    std_ulogic;
-		spi_miso          : out   std_ulogic;
+		spi_cs		: in    std_ulogic_vector(1 downto 0);
+		spi_clk		: in    std_ulogic;
+		spi_mosi	: in    std_ulogic;
+		spi_miso	: out   std_ulogic;
 
-		spi_epcs_cs       : out   std_ulogic;
-		spi_epcs_clk      : out   std_ulogic;
-		spi_epcs_mosi     : out   std_ulogic;
-		spi_epcs_miso     : in    std_ulogic;
+		spi_epcs_cs	: out   std_ulogic;
+		spi_epcs_clk	: out   std_ulogic;
+		spi_epcs_mosi	: out   std_ulogic;
+		spi_epcs_miso	: in    std_ulogic;
 
-		enc_clk           : out   std_ulogic;
+		arReconf	: in  std_ulogic;
 
-		sdram_addr        : out   std_logic_vector(12 downto 0);
-		sdram_ba          : out   std_logic_vector(1 downto 0);
-		sdram_cke         : out   std_logic;
-		sdram_clk         : out   std_logic;
-		sdram_cs_n        : out   std_logic;
+		enc_clk		: out   std_ulogic;
+
+		sdram_addr	: out   std_logic_vector(12 downto 0);
+		sdram_ba	: out   std_logic_vector(1 downto 0);
+		sdram_cke	: out   std_logic;
+		sdram_clk	: out   std_logic;
+		sdram_cs_n	: out   std_logic;
 		--sdram_dq          : inout std_logic_vector(15 downto 0);
-		sdram_dq          : in    std_logic_vector(15 downto 0);
-		sdram_dqm         : out   std_logic_vector(1 downto 0);
-		sdram_cas_n       : out   std_logic;
-		sdram_ras_n       : out   std_logic;
-		sdram_we_n        : out   std_logic
+		sdram_dq	: in    std_logic_vector(15 downto 0);
+		sdram_dqm	: out   std_logic_vector(1 downto 0);
+		sdram_cas_n	: out   std_logic;
+		sdram_ras_n	: out   std_logic;
+		sdram_we_n	: out   std_logic
 	);
 end tbd_rr_base;
 
@@ -84,6 +86,15 @@ architecture rtl of tbd_rr_base is
 	signal switches_synced_debounced : std_ulogic_vector(switches'range);
 
 begin
+
+	-- Reconfiguration unit
+	reconfUnit: entity work.altremotePulsed(rtl)
+	port map
+	(
+		clock		=> clock_50mhz,
+		nResetAsync	=> n_reset_async,
+		reconf		=> arReconf
+	);
 
 	-- Give epcs16 signals to external user
 	-- No need to synchronize. Signals are not used within system clock
