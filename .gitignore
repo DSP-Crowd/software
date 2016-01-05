@@ -69,6 +69,21 @@ timing/
 testbench/
 *_sim/
 
+# ignore mega function specific stuff
+.qsys_edit/
+*.qsys
+*.bsf
+*.ppf
+*.spd
+*.xml
+*.sopcinfo
+*.debuginfo
+*.csv
+*_bb.v
+*_inst.v
+cadence/
+synopsys/
+
 # ignore documents
 *.pdf
 *.png
