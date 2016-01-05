@@ -139,13 +139,13 @@ begin
 	hardware_is_alive_led: entity work.frequencyDivider(rtl)
 	generic map
 	(
-		divideBy	=> 25E6
+		divideBy	=> 25E7
 	)
 	port map
 	(
 		clock		=> clock_50mhz,
 		nResetAsync	=> n_reset_async,
-		output		=> leds(leds'high)
+		output		=> leds(0)
 	);
 
 	-- Reset
