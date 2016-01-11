@@ -1,6 +1,6 @@
 #!/bin/sh
 
-pin_nr=24
+pin_nr=18
 
 if [ ! -d "/sys/class/gpio/gpio${pin_nr}" ]; then
 	echo ${pin_nr} > /sys/class/gpio/export
