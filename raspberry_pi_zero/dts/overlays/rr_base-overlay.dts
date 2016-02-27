@@ -6,6 +6,15 @@
 	compatible = "brcm,bcm2708";
 
 	fragment@0 {
+		target = <&leds>;
+		__overlay__ {
+			act_led: act {
+				linux,default-trigger = "none";
+			};
+		};
+	};
+
+	fragment@1 {
 		target = <&gpio>;
 		__overlay__ {
 			spi0_pins: spi0_pins {
@@ -33,7 +42,7 @@
 		};
 	};
 
-	fragment@1 {
+	fragment@2 {
 		target = <&spi0>;
 		__overlay__ {
 			/* needed to avoid dtc warning */
