@@ -59,8 +59,6 @@ entity tbd_rr_base is
 
 		arReconf	: in  std_ulogic;
 
-		enc_clk		: out   std_ulogic;
-
 		sdram_addr	: out   std_logic_vector(12 downto 0);
 		sdram_ba	: out   std_logic_vector(1 downto 0);
 		sdram_cke	: out   std_logic;

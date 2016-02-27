@@ -175,15 +175,6 @@ set_location_assignment PIN_A4 -to ARRECONF
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to ARRECONF
 
 #============================================================
-# ENC Osc1
-#============================================================
-set_location_assignment PIN_D9 -to ENC_CLK
-
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to ENC_CLK
-
-set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to ENC_CLK
-
-#============================================================
 # SDRAM
 #============================================================
 set_location_assignment PIN_P2 -to SDRAM_ADDR[0]
