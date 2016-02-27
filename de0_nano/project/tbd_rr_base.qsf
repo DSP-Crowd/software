@@ -168,7 +168,7 @@ set_instance_assignment -name CURRENT_STRENGTH_NEW DEFAULT -to SPI_EPCS_CLK
 set_instance_assignment -name CURRENT_STRENGTH_NEW DEFAULT -to SPI_EPCS_MOSI
 
 #============================================================
-# ENC Osc1
+# Reconf
 #============================================================
 set_location_assignment PIN_A4 -to ARRECONF
 
