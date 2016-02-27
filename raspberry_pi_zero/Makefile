@@ -10,7 +10,7 @@ dtc_opt = -I dts -O dtb -b 0 -@
 all: $(obj)
 
 $(obj_dir)/%.dtb: $(src_dir)/%.dts
-	$(dtc_bin) $(dts_opt) -o $@ $<
+	$(dtc_bin) $(dtc_opt) -o $@ $<
 	fdtdump $@
 
 clean:
