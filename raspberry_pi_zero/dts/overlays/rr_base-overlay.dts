@@ -1,0 +1,119 @@
+// Overlay for the Microchip ENC28J60 Ethernet Controller
+/dts-v1/;
+/plugin/;
+
+/ {
+	compatible = "brcm,bcm2708";
+
+	fragment@0 {
+		target = <&spi1>;
+		__overlay__ {
+			/* needed to avoid dtc warning */
+			#address-cells = <1>;
+			#size-cells = <0>;
+
+			status = "okay";
+
+			spidev@1{
+				status = "disabled";
+			};
+
+			eth0: enc28j60@0{
+				compatible = "microchip,enc28j60";
+				reg = <0>; /* CE0 */
+				pinctrl-names = "default";
+				pinctrl-0 = <&eth0_pins>;
+				interrupt-parent = <&gpio>;
+				interrupts = <7 0x2>; /* falling edge */
+				spi-max-frequency = <12000000>;
+				status = "okay";
+			};
+		};
+	};
+
+	fragment@1 {
+		target = <&gpio>;
+		__overlay__ {
+			eth0_pins: eth0_pins {
+				brcm,pins = <7>;
+				brcm,function = <0>; /* in */
+				brcm,pull = <0>; /* none */
+			};
+		};
+	};
+
+	fragment@0 {
+		target = <&spi0>;
+		__overlay__ {
+			/* needed to avoid dtc warning */
+			#address-cells = <1>;
+			#size-cells = <0>;
+
+			status = "okay";
+
+			spidev@1{
+				status = "disabled";
+			};
+
+			flash0: epcs64@0{
+				/* use compatible flash driver, see spi-nor.c:
+				 * { "epcs64",           INFO(0, 0,  256 * 256, 128, 0) },
+				 * { "m25p64-nonjedec",  INFO(0, 0,  64 * 1024, 128, 0) },
+				 */
+				compatible = "micron,m25p64-nonjedec", "spi-nor";
+				reg = <1>; /* CE1 */
+				spi-max-frequency = <12000000>;
+				status = "okay";
+			};
+		};
+	};
+
+	__overrides__ {
+		speed   = <&flash0>, "spi-max-frequency:0"; /* 32 bit integer parameter */
+	};
+	fragment@2 {
+		target = <&spi0>;
+		frag0: __overlay__ {
+			#address-cells = <1>;
+			#size-cells = <0>;
+			pinctrl-0 = <&spi0_pins &spi0_cs_pins>;
+			status = "okay";
+			cs-gpios = <0>, <0>, <&gpio 20 1>, <&gpio 21 1>;
+
+			spidev@2{
+				compatible = "spidev";
+				reg = <2>;   /* CE2 */
+				#address-cells = <1>;
+				#size-cells = <0>;
+				spi-max-frequency = <500000>;
+			};
+
+			spidev@3{
+				compatible = "spidev";
+				reg = <3>;   /* CE3 */
+				#address-cells = <1>;
+				#size-cells = <0>;
+				spi-max-frequency = <500000>;
+			};
+		};
+	};
+
+	fragment@3 {
+		target = <&gpio>;
+		__overlay__ {
+			spi0_cs_pins: spi0_cs_pins {
+				brcm,pins = <20 21>;
+				brcm,function = <1>; /* out */
+			};
+		};
+	};
+
+	__overrides__ {
+		int_pin = <&eth0>, "interrupts:0",
+		          <&eth0_pins>, "brcm,pins:0";
+		speed   = <&eth0>, "spi-max-frequency:0";
+
+		cs2_pin = <&frag0>,"cs-gpios:12", <&spi0_cs_pins>,"brcm,pins:0";
+		cs3_pin = <&frag0>,"cs-gpios:24", <&spi0_cs_pins>,"brcm,pins:4";
+	};
+};
