@@ -63,7 +63,7 @@
 				status = "okay";
 			};
 
-			flash0: epcs64@0{
+			flash0: epcs64@1{
 				/* use compatible flash driver, see spi-nor.c:
 				 * { "epcs64",           INFO(0, 0,  256 * 256, 128, 0) },
 				 * { "m25p64-nonjedec",  INFO(0, 0,  64 * 1024, 128, 0) },
@@ -83,7 +83,7 @@
 				status = "okay";
 			};
 
-			eth1: enc28j60@1{
+			eth1: enc28j60@3{
 				compatible = "microchip,enc28j60";
 				reg = <3>; /* CE3 */
 				pinctrl-names = "default";
