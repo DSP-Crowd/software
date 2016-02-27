@@ -1,8 +1,8 @@
 
-src_dir = overlays
+src_dir = dts/overlays
 src = $(foreach d, $(src_dir), $(wildcard $(d)/*.dts)) 
 
-obj_dir = overlays
+obj_dir = dts/overlays
 obj = $(src:.dts=.dtb)
 
 dtc_bin = ../../rpi_linux_build/src/linux/scripts/dtc/dtc
