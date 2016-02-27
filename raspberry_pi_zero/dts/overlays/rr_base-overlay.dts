@@ -1,4 +1,4 @@
-// Overlay for the Microchip ENC28J60 Ethernet Controller
+// Overlay for rr_base
 /dts-v1/;
 /plugin/;
 
@@ -6,13 +6,47 @@
 	compatible = "brcm,bcm2708";
 
 	fragment@0 {
-		target = <&spi1>;
+		target = <&gpio>;
+		__overlay__ {
+			spi0_pins: spi0_pins {
+				brcm,pins = <9 10 11 19 20 21>;
+				brcm,function = <4>; /* alt0 */
+			};
+
+			spi0_cs_pins: spi0_cs_pins {
+				brcm,pins = <8 12 16 23>;
+				brcm,function = <1>; /* out */
+			};
+
+			/* ethernet irq pins */
+			eth0_pins: eth0_pins {
+				brcm,pins = <7>;
+				brcm,function = <0>; /* in */
+				brcm,pull = <0>; /* none */
+			};
+
+			eth1_pins: eth1_pins {
+				brcm,pins = <24>;
+				brcm,function = <0>; /* in */
+				brcm,pull = <0>; /* none */
+			};
+		};
+	};
+
+	fragment@1 {
+		target = <&spi0>;
 		__overlay__ {
 			/* needed to avoid dtc warning */
 			#address-cells = <1>;
 			#size-cells = <0>;
-
+			compatible = "brcm,bcm2835-spi";
+			pinctrl-0 = <&spi0_pins &spi0_cs_pins>;
 			status = "okay";
+			cs-gpios = <&gpio 8 1>, <&gpio 12 1>, <&gpio 16 1>, <&gpio 23 1>;
+
+			spidev@0{
+				status = "disabled";
+			};
 
 			spidev@1{
 				status = "disabled";
@@ -28,32 +62,6 @@
 				spi-max-frequency = <12000000>;
 				status = "okay";
 			};
-		};
-	};
-
-	fragment@1 {
-		target = <&gpio>;
-		__overlay__ {
-			eth0_pins: eth0_pins {
-				brcm,pins = <7>;
-				brcm,function = <0>; /* in */
-				brcm,pull = <0>; /* none */
-			};
-		};
-	};
-
-	fragment@0 {
-		target = <&spi0>;
-		__overlay__ {
-			/* needed to avoid dtc warning */
-			#address-cells = <1>;
-			#size-cells = <0>;
-
-			status = "okay";
-
-			spidev@1{
-				status = "disabled";
-			};
 
 			flash0: epcs64@0{
 				/* use compatible flash driver, see spi-nor.c:
@@ -65,20 +73,6 @@
 				spi-max-frequency = <12000000>;
 				status = "okay";
 			};
-		};
-	};
-
-	__overrides__ {
-		speed   = <&flash0>, "spi-max-frequency:0"; /* 32 bit integer parameter */
-	};
-	fragment@2 {
-		target = <&spi0>;
-		frag0: __overlay__ {
-			#address-cells = <1>;
-			#size-cells = <0>;
-			pinctrl-0 = <&spi0_pins &spi0_cs_pins>;
-			status = "okay";
-			cs-gpios = <0>, <0>, <&gpio 20 1>, <&gpio 21 1>;
 
 			spidev@2{
 				compatible = "spidev";
@@ -86,34 +80,24 @@
 				#address-cells = <1>;
 				#size-cells = <0>;
 				spi-max-frequency = <500000>;
+				status = "okay";
 			};
 
-			spidev@3{
-				compatible = "spidev";
-				reg = <3>;   /* CE3 */
-				#address-cells = <1>;
-				#size-cells = <0>;
-				spi-max-frequency = <500000>;
-			};
-		};
-	};
-
-	fragment@3 {
-		target = <&gpio>;
-		__overlay__ {
-			spi0_cs_pins: spi0_cs_pins {
-				brcm,pins = <20 21>;
-				brcm,function = <1>; /* out */
+			eth1: enc28j60@1{
+				compatible = "microchip,enc28j60";
+				reg = <3>; /* CE3 */
+				pinctrl-names = "default";
+				pinctrl-0 = <&eth1_pins>;
+				interrupt-parent = <&gpio>;
+				interrupts = <24 0x2>; /* falling edge */
+				spi-max-frequency = <12000000>;
+				status = "okay";
 			};
 		};
 	};
 
 	__overrides__ {
-		int_pin = <&eth0>, "interrupts:0",
-		          <&eth0_pins>, "brcm,pins:0";
-		speed   = <&eth0>, "spi-max-frequency:0";
-
-		cs2_pin = <&frag0>,"cs-gpios:12", <&spi0_cs_pins>,"brcm,pins:0";
-		cs3_pin = <&frag0>,"cs-gpios:24", <&spi0_cs_pins>,"brcm,pins:4";
+		eth_speed = <&eth0>, "spi-max-frequency:0"; /* 32 bit integer parameter */
+		mtd_speed = <&flash0>, "spi-max-frequency:0"; /* 32 bit integer parameter */
 	};
 };
