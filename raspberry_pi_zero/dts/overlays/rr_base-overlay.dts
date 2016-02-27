@@ -18,8 +18,13 @@
 		target = <&gpio>;
 		__overlay__ {
 			spi0_pins: spi0_pins {
-				brcm,pins = <9 10 11 19 20 21>;
+				brcm,pins = <9 10 11>;
 				brcm,function = <4>; /* alt0 */
+			};
+
+			spi1_pins: spi1_pins {
+				brcm,pins = <19 20 21>;
+				brcm,function = <0>; /* in, see bindings/pinctrl/brcm,bcm2835-gpio.txt */
 			};
 
 			spi0_cs_pins: spi0_cs_pins {
@@ -49,7 +54,7 @@
 			#address-cells = <1>;
 			#size-cells = <0>;
 			compatible = "brcm,bcm2835-spi";
-			pinctrl-0 = <&spi0_pins &spi0_cs_pins>;
+			pinctrl-0 = <&spi0_pins &spi1_pins &spi0_cs_pins>;
 			status = "okay";
 			cs-gpios = <&gpio 8 1>, <&gpio 12 1>, <&gpio 16 1>, <&gpio 23 1>;
 
