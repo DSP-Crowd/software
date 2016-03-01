@@ -131,8 +131,8 @@ set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to LEDS[7]
 #============================================================
 # SPI
 #============================================================
-set_location_assignment PIN_B6 -to SPI_CS[0]
-set_location_assignment PIN_A5 -to SPI_CS[1]
+set_location_assignment PIN_A12 -to SPI_CS[0]
+set_location_assignment PIN_D12 -to SPI_CS[1]
 set_location_assignment PIN_C8 -to SPI_CLK
 set_location_assignment PIN_E7 -to SPI_MOSI
 set_location_assignment PIN_E8 -to SPI_MISO
@@ -170,7 +170,7 @@ set_instance_assignment -name CURRENT_STRENGTH_NEW DEFAULT -to SPI_EPCS_MOSI
 #============================================================
 # Reconf
 #============================================================
-set_location_assignment PIN_A4 -to ARRECONF
+set_location_assignment PIN_J14 -to ARRECONF
 
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to ARRECONF
 
