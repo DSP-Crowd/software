@@ -64,7 +64,7 @@ architecture rtl of altremotePulsed is
 
     type STATEMACHINE_STEP_TYPE is
     (
-        SM_INIT, SM_SET_RESET, SM_WRITE_BOOT_ADDRESS, SM_TURN_OFF_WDT, SM_SET_EARLY_CONF_DONE_CHECK, SM_WRITE_PARAM, SM_WAIT_BUSY, SM_IDLE
+        SM_INIT, SM_SET_RESET, SM_WRITE_BOOT_ADDRESS, SM_TURN_OFF_WDT, SM_SET_EARLY_CONF_DONE_CHECK, SM_WRITE_PARAM, SM_WAIT_BUSY, SM_IDLE, SM_RECONF_READY
     );
 
     type REG_TYPE is record
@@ -139,6 +139,11 @@ begin
         -- fsm
         case R.sm_step is
             when SM_IDLE =>
+                if(reconf = '0')then
+                   NxR.sm_step <= SM_RECONF_READY;
+                end if;
+
+            when SM_RECONF_READY =>
                 if(reconf = '1')then
                    ar_reconfig <= '1';
                 end if;
