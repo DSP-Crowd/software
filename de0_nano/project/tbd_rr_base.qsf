@@ -170,7 +170,7 @@ set_instance_assignment -name CURRENT_STRENGTH_NEW DEFAULT -to SPI_EPCS_MOSI
 #============================================================
 # Reconf
 #============================================================
-set_location_assignment PIN_J14 -to ARRECONF
+set_location_assignment PIN_T9 -to ARRECONF
 
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to ARRECONF
 
