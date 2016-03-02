@@ -94,7 +94,7 @@ begin
 		reconf		=> arReconf
 	);
 
-	-- Give epcs16 signals to external user
+	-- Give epcs64 signals to external user
 	-- No need to synchronize. Signals are not used within system clock
 	spi_epcs_cs <= spi_cs(0);
 	spi_epcs_clk <= spi_clk;
