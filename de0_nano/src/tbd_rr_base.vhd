@@ -99,7 +99,7 @@ begin
 	spi_epcs_cs <= spi_cs(0);
 	spi_epcs_clk <= spi_clk;
 	spi_epcs_mosi <= spi_mosi;
-	-- Important: MISO must not drive signal if epcs64 ist not selected
+	-- Important: MISO must not drive signal if epcs64 is not selected
 	spi_miso <= spi_epcs_miso when spi_cs(0) = '0' else 'Z';
 
 	-- Synchronize inputs
