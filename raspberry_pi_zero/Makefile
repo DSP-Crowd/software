@@ -11,7 +11,7 @@ all: $(obj)
 
 $(obj_dir)/%.dtb: $(src_dir)/%.dts
 	$(dtc_bin) $(dtc_opt) -o $@ $<
-	fdtdump $@
+	#fdtdump $@
 
 clean:
 	rm -f $(obj_dir)/*.dtb
