@@ -1,0 +1,26 @@
+// Overlay for rr_base
+/dts-v1/;
+/plugin/;
+
+/ {
+	compatible = "brcm,bcm2708";
+
+	fragment@0 {
+		target = <&leds>;
+		__overlay__ {
+			act_led: act {
+				linux,default-trigger = "none";
+			};
+		};
+	};
+
+	fragment@1 {
+		target = <&gpio>;
+		__overlay__ {
+			spi1_pins: spi1_pins {
+				brcm,pins = <19 20 21>;
+				brcm,function = <0>; /* in, see bindings/pinctrl/brcm,bcm2835-gpio.txt */
+			};
+		};
+	};
+};
