@@ -102,3 +102,4 @@ transcript
 # ignore raspberry pi hats eeprom utils binaries
 eepmake
 eepdump
+*.eep
