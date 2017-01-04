@@ -71,7 +71,7 @@ testbench/
 
 # ignore mega function specific stuff
 .qsys_edit/
-*.qsys
+*.qdf
 *.bsf
 *.ppf
 *.spd
