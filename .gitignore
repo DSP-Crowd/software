@@ -93,6 +93,7 @@ synopsys/
 
 # ignore binary files
 *.bin
+*.sld
 
 # ignore modelsim temp files
 work/
