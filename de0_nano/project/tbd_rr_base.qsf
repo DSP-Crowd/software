@@ -68,8 +68,8 @@ set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to CLOCK_50MHZ
 #============================================================
 # UART
 #============================================================
-set_location_assignment PIN_A2 -to UART_RX
-set_location_assignment PIN_B3 -to UART_TX
+set_location_assignment PIN_R12 -to UART_RX
+set_location_assignment PIN_R13 -to UART_TX
 
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to UART_RX
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to UART_TX
@@ -131,11 +131,11 @@ set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to LEDS[7]
 #============================================================
 # SPI
 #============================================================
-set_location_assignment PIN_A12 -to SPI_CS[0]
-set_location_assignment PIN_D12 -to SPI_CS[1]
-set_location_assignment PIN_C8 -to SPI_CLK
-set_location_assignment PIN_E7 -to SPI_MOSI
-set_location_assignment PIN_E8 -to SPI_MISO
+set_location_assignment PIN_C11 -to SPI_CS[0] # EPCS
+set_location_assignment PIN_A12 -to SPI_CS[1] # User
+set_location_assignment PIN_B8 -to SPI_CLK
+set_location_assignment PIN_M10 -to SPI_MOSI
+set_location_assignment PIN_J16 -to SPI_MISO
 
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to SPI_CS[0]
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to SPI_CS[1]
@@ -170,7 +170,7 @@ set_instance_assignment -name CURRENT_STRENGTH_NEW DEFAULT -to SPI_EPCS_MOSI
 #============================================================
 # Reconf
 #============================================================
-set_location_assignment PIN_T9 -to ARRECONF
+set_location_assignment PIN_R9 -to ARRECONF
 
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to ARRECONF
 
