@@ -1,3 +1,3 @@
 #!/bin/sh
 
-scp output/rr_base.bin root@$1:/root/rr_base.bin
+scp output/rr_base.bin pi@$1:~/rr_base.bin
