@@ -90,6 +90,7 @@ synopsys/
 
 # ignore dtb files
 *.dtb
+*.dtbo
 
 # ignore binary files
 *.bin
