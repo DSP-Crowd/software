@@ -29,7 +29,7 @@
 			compatible = "brcm,bcm2835-spi";
 			pinctrl-0 = <&spi0_pins &spi0_cs_pins>;
 			status = "okay";
-			cs-gpios = <&gpio 8 1>, <&gpio 23 1>, <&gpio 12 1>, <&gpio 26 1>;
+			cs-gpios = <0>, <0>, <&gpio 12 1>, <&gpio 26 1>;
 
 			flash0: epcs64@2{
 				/* use compatible flash driver, see spi-nor.c:
