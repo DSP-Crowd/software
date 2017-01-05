@@ -42,12 +42,12 @@
 				status = "okay";
 			};
 
-			spidev@3{
+			user0: spidev@3{
 				compatible = "spidev";
 				reg = <3>;   /* CE3 */
 				#address-cells = <1>;
 				#size-cells = <0>;
-				spi-max-frequency = <500000>;
+				spi-max-frequency = <12000000>;
 				status = "okay";
 			};
 		};
@@ -55,5 +55,6 @@
 
 	__overrides__ {
 		mtd_speed = <&flash0>, "spi-max-frequency:0"; /* 32 bit integer parameter */
+		user_speed = <&user0>, "spi-max-frequency:0"; /* 32 bit integer parameter */
 	};
 };
