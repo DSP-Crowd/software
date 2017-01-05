@@ -28,7 +28,7 @@ product_ver 0x0001
 vendor "DSP-Crowd Electronics GmbH"
 
 # ASCII product string (max 255 characters)
-product "R-Pi to DE0 Nano base board"
+product "R-Pi to DE0 Nano connector board"
 
 
 ########################################################################
