@@ -14,7 +14,7 @@
 			};
 
 			spi0_cs_pins: spi0_cs_pins {
-				brcm,pins = <8 23 12 26>;
+				brcm,pins = <12 26>;
 				brcm,function = <1>; /* out */
 			};
 		};
