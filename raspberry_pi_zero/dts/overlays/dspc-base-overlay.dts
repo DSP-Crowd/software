@@ -13,19 +13,18 @@
 				brcm,function = <4>; /* alt0 */
 			};
 
-			spi0_cs_pins: spi0_cs_pins {
+			eth_cs_pins: eth_cs_pins {
 				brcm,pins = <8 23>;
 				brcm,function = <1>; /* out */
 			};
 
-			/* ethernet irq pins */
-			eth0_pins: eth0_pins {
+			eth0_irq_pin: eth0_irq_pin {
 				brcm,pins = <7>;
 				brcm,function = <0>; /* in */
 				brcm,pull = <0>; /* none */
 			};
 
-			eth1_pins: eth1_pins {
+			eth1_irq_pin: eth1_irq_pin {
 				brcm,pins = <24>;
 				brcm,function = <0>; /* in */
 				brcm,pull = <0>; /* none */
@@ -40,7 +39,7 @@
 			#address-cells = <1>;
 			#size-cells = <0>;
 			compatible = "brcm,bcm2835-spi";
-			pinctrl-0 = <&spi0_pins &spi0_cs_pins>;
+			pinctrl-0 = <&spi0_pins &eth_cs_pins>;
 			status = "okay";
 			cs-gpios = <&gpio 8 1>, <&gpio 23 1>;
 
@@ -56,7 +55,7 @@
 				compatible = "microchip,enc28j60";
 				reg = <0>; /* CE0 */
 				pinctrl-names = "default";
-				pinctrl-0 = <&eth0_pins>;
+				pinctrl-0 = <&eth0_irq_pin>;
 				interrupt-parent = <&gpio>;
 				interrupts = <7 0x2>; /* falling edge */
 				spi-max-frequency = <12000000>;
@@ -67,7 +66,7 @@
 				compatible = "microchip,enc28j60";
 				reg = <1>; /* CE1 */
 				pinctrl-names = "default";
-				pinctrl-0 = <&eth1_pins>;
+				pinctrl-0 = <&eth1_irq_pin>;
 				interrupt-parent = <&gpio>;
 				interrupts = <24 0x2>; /* falling edge */
 				spi-max-frequency = <12000000>;
