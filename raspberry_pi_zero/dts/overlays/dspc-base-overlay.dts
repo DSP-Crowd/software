@@ -58,7 +58,7 @@
 				pinctrl-0 = <&eth0_irq_pin>;
 				interrupt-parent = <&gpio>;
 				interrupts = <7 0x2>; /* falling edge */
-				spi-max-frequency = <12000000>;
+				spi-max-frequency = <20000000>;
 				status = "okay";
 			};
 
@@ -69,7 +69,7 @@
 				pinctrl-0 = <&eth1_irq_pin>;
 				interrupt-parent = <&gpio>;
 				interrupts = <24 0x2>; /* falling edge */
-				spi-max-frequency = <12000000>;
+				spi-max-frequency = <20000000>;
 				status = "okay";
 			};
 		};
