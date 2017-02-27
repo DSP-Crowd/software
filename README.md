@@ -1,6 +1,6 @@
-# rr_base
+# DSP-Crowd
 
-Base components for project redRocket.
+Base components for the Raspberry Pi Zero to DE0 Nano connector
 
 Used hardware
 - DE0 Nano
