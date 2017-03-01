@@ -8,13 +8,13 @@
 	fragment@1 {
 		target = <&gpio>;
 		__overlay__ {
-			spi0_pins: spi0_pins {
-				brcm,pins = <9 10 11>;
-				brcm,function = <4>; /* alt0 */
+			eth_cs_pins: eth_cs_pins {
+				brcm,pins = <8 23>;
+				brcm,function = <1>; /* out */
 			};
 
-			spi0_cs_pins: spi0_cs_pins {
-				brcm,pins = <12 26>;
+			de0_nano_cs_pins: de0_nano_cs_pins {
+				brcm,pins = <12 16>;
 				brcm,function = <1>; /* out */
 			};
 		};
@@ -27,9 +27,9 @@
 			#address-cells = <1>;
 			#size-cells = <0>;
 			compatible = "brcm,bcm2835-spi";
-			pinctrl-0 = <&spi0_pins &spi0_cs_pins>;
+			pinctrl-0 = <&spi0_pins &eth_cs_pins &de0_nano_cs_pins>;
 			status = "okay";
-			cs-gpios = <0>, <0>, <&gpio 12 1>, <&gpio 26 1>;
+			cs-gpios = <&gpio 8 1>, <&gpio 23 1>, <&gpio 12 1>, <&gpio 16 1>;
 
 			flash0: epcs64@2{
 				/* use compatible flash driver, see spi-nor.c:
