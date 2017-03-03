@@ -17,3 +17,8 @@ This repository includes one project for each board
 
 Status
 - All done
+
+Installation on Raspberry Pi Zero
+
+$ wget https://github.com/DSP-Crowd/software/raw/master/install.sh
+$ sudo ./install.sh
