@@ -6,7 +6,7 @@ if [ "$(id -u)" != "0" ]; then
 fi
 
 wget -nc -P /boot/overlays https://github.com/DSP-Crowd/software/raw/master/raspberry_pi_zero/dts/overlays/dspc-de0_nano.dtbo
-#echo "dtoverlay=dspc-de0_nano" >> /boot/config.txt
+echo "dtoverlay=dspc-de0_nano" >> /boot/config.txt
 
 apt-get install mtd-utils
 
