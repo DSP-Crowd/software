@@ -83,6 +83,10 @@ testbench/
 *_inst.v
 cadence/
 synopsys/
+*.sdo
+*.vho
+*.sft
+*.xrf
 
 # ignore documents
 *.pdf
