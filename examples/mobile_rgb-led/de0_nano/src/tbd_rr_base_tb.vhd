@@ -221,13 +221,18 @@ Stimu : process
             wait for c_byte_pad_t;
             wait for c_byte_pad_t;
             spi_cs(SPI_USER_CS_IDX) <= '0';
-            wait for c_byte_pad_t;
 
+            wait for c_byte_pad_t;
             spi_send_byte(X"00"); -- Dummy address
+            wait for c_byte_pad_t;
             spi_send_byte(X"00");
+            wait for c_byte_pad_t;
             spi_send_byte(red);
+            wait for c_byte_pad_t;
             spi_send_byte(green);
+            wait for c_byte_pad_t;
             spi_send_byte(blue);
+            wait for c_byte_pad_t;
             -- spi_send_byte(X"11"); -- Test byte
 
             spi_cs(SPI_USER_CS_IDX) <= '1';
