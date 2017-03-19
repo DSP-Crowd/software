@@ -31,6 +31,8 @@ library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 
+use work.spi2rgb_pkg.all;
+
 entity tbd_rr_base is
 	generic
 	(
@@ -83,6 +85,15 @@ architecture rtl of tbd_rr_base is
 	signal key_0_synced_debounced : std_ulogic;
 	signal switches_synced_debounced : std_ulogic_vector(switches'range);
 
+	signal spi_unsynced       : std_ulogic_vector(2 downto 0);
+	signal spi_synced         : std_ulogic_vector(2 downto 0);
+	signal spi_cs_user_synced : std_ulogic;
+	signal spi_clk_synced     : std_ulogic;
+	signal spi_mosi_synced    : std_ulogic;
+
+	signal spi2rgb_data       : SPI2RGB_DATA_TYPE;
+	signal spi2rgb_strobes    : std_ulogic_vector(SPI2RGB_NUM_DATA_BYTES - 1 downto 0);
+
 begin
 
 	-- Reconfiguration unit
@@ -134,6 +145,25 @@ begin
 	key_0_synced_debounced <= inputs_synced_debounced(0);
 	switches_synced_debounced <= inputs_synced_debounced(inputs_synced_debounced'high downto 1);
 
+	-- Synchronize SPI
+	spi_unsynced <=  spi_cs(1) & spi_clk & spi_mosi;
+	spi_sync: entity work.input_sync(rtl)
+	generic map
+	(
+		num_inputs      => spi_unsynced'length,
+		num_sync_stages => 2
+	)
+	port map
+	(
+		clock           => clock_50mhz,
+		n_reset_async   => n_reset_async,
+		unsynced_inputs => spi_unsynced,
+		synced_outputs  => spi_synced
+	);
+	spi_cs_user_synced <= spi_synced(2);
+	spi_clk_synced <= spi_synced(1);
+	spi_mosi_synced <= spi_synced(0);
+
 	-- Hardware-is-alive-LED
 	hardware_is_alive_led: entity work.frequencyDivider(rtl)
 	generic map
@@ -145,6 +175,21 @@ begin
 		clock		=> clock_50mhz,
 		nResetAsync	=> n_reset_async,
 		output		=> leds(0)
+	);
+
+	-- SPI-Slave
+	spislave: entity work.spi2rgb(rtl)
+	port map
+	(
+		clock		=> clock_50mhz,
+		n_reset_async	=> n_reset_async,
+
+		spi_cs		=> spi_cs_user_synced,
+		spi_clk		=> spi_clk_synced,
+		spi_mosi	=> spi_mosi_synced,
+
+		data		=> spi2rgb_data,
+		strobes		=> spi2rgb_strobes
 	);
 
 	-- Reset
