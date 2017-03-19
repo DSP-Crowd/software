@@ -53,7 +53,7 @@
 *.tcl
 *.txt # Explicitly add any text files used
 *~
-*example*
+#*example*
 *sopc_*
 *.jic
 *.map
