@@ -12,4 +12,4 @@ flash_erase ${mdev} 0 6
 dd if=${rfile} of=${mdev}
 cmp ${mdev} ${rfile}
 
-./fpga-reconf.sh
+$(dirname $0)/fpga-reconf.sh
