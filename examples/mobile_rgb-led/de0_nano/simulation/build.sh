@@ -29,7 +29,7 @@
 # -----------------------------------------------------------------------------
 # -----------------------------------------------------------------------------
 
-src_root=../../src
+src_root=../src
 
 vlib work
 vmap work work
@@ -38,9 +38,11 @@ vcom ${src_root}/global_pkg.vhd
 vcom ${src_root}/input_sync.vhd
 vcom ${src_root}/input_debounce.vhd
 vcom ${src_root}/frequency_divider.vhd
+vcom ${src_root}/frequency_divider_tb.vhd
 vcom ${src_root}/strobe_gen.vhd
 
 vcom ${src_root}/altremote_pulsed.vhd
+vcom ${src_root}/altremote_pulsed_tb.vhd
 vcom ${src_root}/sdram_0_test_component.vhd
 vlog ${src_root}/42s16160.v
 vcom ${src_root}/spi2rgb_pkg.vhd
