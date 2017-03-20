@@ -38,7 +38,6 @@ entity spi2rgb is
 	(
 		clock			: in  std_ulogic;
 		n_reset_async		: in  std_ulogic;
-		strobe_output		: out std_ulogic;
 
 		spi_cs			: in  std_ulogic;
 		spi_clk			: in  std_ulogic;
