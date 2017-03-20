@@ -47,6 +47,7 @@ vcom ${src_root}/sdram_0_test_component.vhd
 vlog ${src_root}/42s16160.v
 vcom ${src_root}/spi2rgb_pkg.vhd
 vcom ${src_root}/spi2rgb.vhd
+vcom ${src_root}/byte2pwm.vhd
 
 vcom ${src_root}/tbd_rr_base.vhd
 vcom ${src_root}/tbd_rr_base_tb.vhd

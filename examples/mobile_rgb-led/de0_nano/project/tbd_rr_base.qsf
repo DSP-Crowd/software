@@ -129,6 +129,21 @@ set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to LEDS[6]
 set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to LEDS[7]
 
 #============================================================
+# PWM
+#============================================================
+set_location_assignment PIN_B12 -to PWM_RED
+set_location_assignment PIN_D11 -to PWM_GREEN
+set_location_assignment PIN_B11 -to PWM_BLUE
+
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to PWM_RED
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to PWM_GREEN
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to PWM_BLUE
+
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to PWM_RED
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to PWM_GREEN
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to PWM_BLUE
+
+#============================================================
 # SPI
 #============================================================
 set_location_assignment PIN_C11 -to SPI_CS[0]

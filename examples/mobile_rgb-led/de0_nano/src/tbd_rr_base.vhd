@@ -61,6 +61,10 @@ entity tbd_rr_base is
 
 		arReconf	: in  std_ulogic;
 
+		pwm_red		: out   std_ulogic;
+		pwm_green	: out   std_ulogic;
+		pwm_blue	: out   std_ulogic;
+
 		sdram_addr	: out   std_logic_vector(12 downto 0);
 		sdram_ba	: out   std_logic_vector(1 downto 0);
 		sdram_cke	: out   std_logic;
@@ -190,6 +194,41 @@ begin
 
 		data		=> spi2rgb_data,
 		valid_bits	=> spi2rgb_valid_bits
+	);
+
+	-- RGB PWMs
+	pwmred: entity work.byte2pwm(rtl)
+	port map
+	(
+		clock		=> clock_50mhz,
+		n_reset_async	=> n_reset_async,
+
+		data		=> spi2rgb_data(2),
+		data_valid	=> spi2rgb_valid_bits(2),
+
+		led_pwm		=> pwm_red
+	);
+	pwmgreen: entity work.byte2pwm(rtl)
+	port map
+	(
+		clock		=> clock_50mhz,
+		n_reset_async	=> n_reset_async,
+
+		data		=> spi2rgb_data(1),
+		data_valid	=> spi2rgb_valid_bits(1),
+
+		led_pwm		=> pwm_green
+	);
+	pwmblue: entity work.byte2pwm(rtl)
+	port map
+	(
+		clock		=> clock_50mhz,
+		n_reset_async	=> n_reset_async,
+
+		data		=> spi2rgb_data(0),
+		data_valid	=> spi2rgb_valid_bits(0),
+
+		led_pwm		=> pwm_blue
 	);
 
 	-- Reset
