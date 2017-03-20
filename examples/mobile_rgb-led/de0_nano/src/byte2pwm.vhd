@@ -95,6 +95,11 @@ begin
 						NxR.counter <= R.counter + 1;
 					end if;
 
+					if(R.counter = 254)then
+						NxR.counter <= 0;
+						NxR.sm_step <= SM_HIGH;
+					end if;
+
 				when others =>
 					NxR.sm_step <= SM_LOW;
 			end case;
