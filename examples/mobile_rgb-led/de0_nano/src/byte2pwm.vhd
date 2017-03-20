@@ -116,6 +116,7 @@ begin
 	generic map
 	(
 		num_clock_cycles => 50E2 -- 10us strobe
+		-- num_clock_cycles => 3 -- Test
 	)
 	port map
 	(
