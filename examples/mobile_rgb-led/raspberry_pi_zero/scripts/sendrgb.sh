@@ -13,4 +13,4 @@ rgb="$red $green $blue"
 echo "sendrgb.sh: rgb is '$rgb'"
 
 echo ". Output is: "
-python $scriptname $rgb | tr [a-z] [A-Z]
+python $scriptname 00 00 $rgb | tr [a-z] [A-Z]
