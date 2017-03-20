@@ -92,7 +92,7 @@ architecture rtl of tbd_rr_base is
 	signal spi_mosi_synced    : std_ulogic;
 
 	signal spi2rgb_data       : SPI2RGB_DATA_TYPE;
-	signal spi2rgb_strobes    : std_ulogic_vector(SPI2RGB_NUM_DATA_BYTES - 1 downto 0);
+	signal spi2rgb_valid_bits : std_ulogic_vector(SPI2RGB_NUM_DATA_BYTES - 1 downto 0);
 
 begin
 
@@ -189,7 +189,7 @@ begin
 		spi_mosi	=> spi_mosi_synced,
 
 		data		=> spi2rgb_data,
-		strobes		=> spi2rgb_strobes
+		valid_bits	=> spi2rgb_valid_bits
 	);
 
 	-- Reset

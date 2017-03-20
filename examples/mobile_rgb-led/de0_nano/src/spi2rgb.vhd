@@ -44,7 +44,7 @@ entity spi2rgb is
 		spi_mosi		: in  std_ulogic;
 
 		data			: out SPI2RGB_DATA_TYPE;
-		strobes			: out std_ulogic_vector(SPI2RGB_NUM_DATA_BYTES - 1 downto 0)
+		valid_bits		: out std_ulogic_vector(SPI2RGB_NUM_DATA_BYTES - 1 downto 0)
 	);
 end spi2rgb;
 
@@ -79,7 +79,7 @@ begin
 	proc_comb: process(R, spi_cs, spi_clk, spi_mosi)
 	begin
 		NxR <= R;
-		strobes <= (others => '0');
+		valid_bits <= (others => '0');
 
 		case R.sm_step is
 			when SM_WAIT_CS_LOW =>
@@ -104,7 +104,7 @@ begin
 
 						if(R.byte_idx < 3)then
 							data(R.byte_idx) <= R.tmp;
-							strobes(R.byte_idx) <= '1';
+							valid_bits(R.byte_idx) <= '1';
 						end if;
 
 						if(R.byte_idx = 0)then
