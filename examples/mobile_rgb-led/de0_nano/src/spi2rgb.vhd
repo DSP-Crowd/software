@@ -79,6 +79,7 @@ begin
 	proc_comb: process(R, spi_cs, spi_clk, spi_mosi)
 	begin
 		NxR <= R;
+		data <= (others => (others => '0'));
 		valid_bits <= (others => '0');
 
 		case R.sm_step is
