@@ -83,7 +83,7 @@ begin
 
 		case R.sm_step is
 			when SM_WAIT_CS_LOW =>
-				if(spi_cs = '0' and NxR.logging_done <= '0')then
+				if(spi_cs = '0' and R.logging_done = '0')then
 					NxR.sm_step <= SM_GET_DATA_BIT;
 					NxR.bit_idx <= 7;
 					NxR.byte_idx <= 4;
