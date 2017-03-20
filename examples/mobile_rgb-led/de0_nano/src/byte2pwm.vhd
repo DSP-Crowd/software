@@ -97,7 +97,12 @@ begin
 
 					if(R.counter = 254)then
 						NxR.counter <= 0;
-						NxR.sm_step <= SM_HIGH;
+						if(R.counter_buf /= 0)then
+							NxR.counter_max <= R.counter_buf;
+							NxR.sm_step <= SM_HIGH;
+						else
+							NxR.sm_step <= SM_LOW;
+						end if;
 					end if;
 
 				when others =>
