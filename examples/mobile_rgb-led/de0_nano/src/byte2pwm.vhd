@@ -115,7 +115,7 @@ begin
 	mainstrobe: entity work.strobe_gen(rtl)
 	generic map
 	(
-		num_clock_cycles => 50E2 -- 10us strobe
+		num_clock_cycles => 50E1 -- 1us strobe
 		-- num_clock_cycles => 3 -- Test
 	)
 	port map
