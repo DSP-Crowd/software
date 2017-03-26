@@ -2,7 +2,8 @@
 
 Software for the Raspberry Pi to DE0 Nano connector
 
-Used hardware
+## Used hardware ##
+
 - DE0 Nano
 - One of the following Raspberry Pis
   - Raspberry Pi Zero
@@ -12,7 +13,8 @@ Used hardware
   - Raspberry Pi 2 Model B
   - Raspberry Pi 3 Model B
 
-Initial setup
+## Initial setup ##
+
 1. Power up the system
    1. Connect a USB Micro B cable to the connector board. We recommend the official Raspberry Pi power supply as source
    2. If you use a Raspberry Pi 1 Model B+ you also need to connect a USB Micro B cable to the Raspberry Pi while it is booting. After that you can remove this cable
@@ -27,5 +29,6 @@ Initial setup
 6. On your Raspberry Pi
    1. ..
 
-Programming the DE0 Nano after the initial setup
-1. 
+## Programming the DE0 Nano after the initial setup ##
+
+1. TODO
