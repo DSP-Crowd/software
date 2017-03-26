@@ -16,8 +16,8 @@ Software for the Raspberry Pi to DE0 Nano connector
 ## Initial setup ##
 
 1. Power up the system
-   1. Connect a USB Micro B cable to the connector board. We recommend the official Raspberry Pi power supply as source
-   2. If you use a Raspberry Pi 1 Model B+ you also need to connect a USB Micro B cable to the Raspberry Pi while it is booting. After that you can remove this cable
+   1. Connect an USB Micro B cable to the connector board. We recommend the official Raspberry Pi power supply as source
+   2. If you use a Raspberry Pi 1 Model B+ you also need to connect an USB Micro B cable to the Raspberry Pi while it is booting. After that you can remove this cable
 2. Copy the device tree overlay file `_hello-world/raspberry_pi_zero/dts/overlays/dspc-de0_nano.dtbo` from the repository to the directory `/boot/overlays` on your Raspberry Pi
 3. On your Raspberry Pi
    1. Add the line `dtoverlay=dspc-de0_nano` in /boot/config.txt
