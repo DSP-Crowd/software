@@ -65,3 +65,44 @@ Erasing 64 Kibyte @ 50000 -- 100 % complete
 pi@raspberrypi:~ $ sudo cmp rr_base.bin /dev/mtd0
 rr_base.bin /dev/mtd0 differ: byte 33, line 1
 ```
+
+## Restart the FPGA on the DE0 Nano ##
+
+Execute the following commands on your Pi:
+
+1. Tell Linux that you want to use pin 18. This pin is used to restart the FPGA
+```
+pi@raspberrypi:~ $ echo 18 > /sys/class/gpio/export
+```
+1. Tell Linux that this pin is used as output
+```
+pi@raspberrypi:~ $ echo out > /sys/class/gpio/gpio18/direction
+```
+1. Finally set and then clear pin 18. Setting the pin will initiate the FPGA reconfiguration process
+```
+pi@raspberrypi:~ $ echo 1 > /sys/class/gpio/gpio18/value
+pi@raspberrypi:~ $ echo 0 > /sys/class/gpio/gpio18/value
+```
+
+## Use our helper scripts ##
+
+This can also be done more convenient with our helper scripts
+
+1. Download the scripts
+```
+pi@raspberrypi:~ $ wget https://raw.githubusercontent.com/DSP-Crowd/software/master/_hello-world/raspberry_pi_zero/scripts/fpga-reconf.sh
+pi@raspberrypi:~ $ wget https://raw.githubusercontent.com/DSP-Crowd/software/master/_hello-world/raspberry_pi_zero/scripts/update-fpga.sh
+```
+1. Make our scripts executable
+```
+pi@raspberrypi:~ $ chmod +x update-fpga.sh fpga-reconf.sh
+```
+1. Run them
+```
+pi@raspberrypi:~ $ sudo ./update-fpga.sh
+Erasing 64 Kibyte @ 50000 -- 100 % complete
+411+1 records in
+411+1 records out
+210480 bytes (210 kB) copied, 0.966251 s, 218 kB/s
+cmp: EOF on rr_base.bin
+```
