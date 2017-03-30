@@ -37,28 +37,28 @@ crw------- 1 root root 90, 0 Mar 29 23:17 /dev/mtd0
 
 ## Programming the DE0 Nano after the initial setup ##
 
-1. On your Raspberry Pi
-   1. Download the hello world designs for the FPGA:
-      1. `wget https://github.com/DSP-Crowd/software/blob/master/_hello-world/de0_nano/output/rr_base.bin` .. Slow blinking hello world led
-      1. `wget https://github.com/DSP-Crowd/software/blob/master/_hello-world/de0_nano/output/rr_base-fast.bin` .. Fast blinking hello world led
-   1. Clear the flash device, which is on the DE0 Nano FPGA board
+In this section, everything is done on the Raspberry Pi
+1. Download the hello world designs for the FPGA:
+   1. `wget https://github.com/DSP-Crowd/software/blob/master/_hello-world/de0_nano/output/rr_base.bin` .. Slow blinking hello world led
+   1. `wget https://github.com/DSP-Crowd/software/blob/master/_hello-world/de0_nano/output/rr_base-fast.bin` .. Fast blinking hello world led
+1. Clear the flash device, which is on the DE0 Nano FPGA board
 ```
 pi@raspberrypi:~ $ sudo flash_erase /dev/mtd0 0 6
 Erasing 64 Kibyte @ 50000 -- 100 % complete
 ```
-   3. Program the flash device
+3. Program the flash device
 ```
 pi@raspberrypi:~ $ sudo dd if=rr_base.bin of=/dev/mtd0
 411+1 records in
 411+1 records out
 210480 bytes (210 kB) copied, 0.973143 s, 216 kB/s
 ```
-   4. Check if the flash device contains your file from the Raspberry Pi. If you see EOF (which means End Of File), then everything is fine! :)
+4. Check if the flash device contains your file from the Raspberry Pi. If you see EOF (which means End Of File), then everything is fine! :)
 ```
 pi@raspberrypi:~ $ sudo cmp rr_base.bin /dev/mtd0
 cmp: EOF on rr_base.bin
 ```
-   5. If something went wrong it looks like this:
+5. If something went wrong it looks like this:
 ```
 pi@raspberrypi:~ $ sudo flash_erase /dev/mtd0 0 6
 Erasing 64 Kibyte @ 50000 -- 100 % complete
