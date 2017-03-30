@@ -32,7 +32,8 @@ crw------- 1 root root 90, 0 Mar 29 23:17 /dev/mtd0
 5. On your PC
    1. Download the initial design file `_hello-world/de0_nano/output/rr_base.sof` to your DE0 Nano board with Quartus
 6. On your Raspberry Pi
-   1. ..
+   1. Programm the flash on the DE0 Nano board. See "Programming the DE0 Nano after the initial setup"
+7. After that you can remove the cable on the DE0 Nano. You will never need it again
 
 ## Programming the DE0 Nano after the initial setup ##
 
