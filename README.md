@@ -76,8 +76,6 @@ cmp: EOF on rr_base.bin
 ```
 5. If something went wrong it looks like this:
 ```
-pi@raspberrypi:~ $ sudo flash_erase /dev/mtd0 0 6
-Erasing 64 Kibyte @ 50000 -- 100 % complete
 pi@raspberrypi:~ $ sudo cmp rr_base.bin /dev/mtd0
 rr_base.bin /dev/mtd0 differ: byte 33, line 1
 ```
