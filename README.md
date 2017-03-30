@@ -28,7 +28,7 @@ The following steps must be done only once
 ```
 pi@raspberrypi:~ $ sudo wget https://raw.githubusercontent.com/DSP-Crowd/software/master/_hello-world/raspberry_pi_zero/dts/overlays/dspc-de0_nano.dtbo -P /boot/overlays
 ```
-1. Add the line `dtoverlay=dspc-de0_nano` in `/boot/config.txt`
+2. Add the line `dtoverlay=dspc-de0_nano` in `/boot/config.txt`
 1. Install the mtd-utils package with `sudo apt-get install mtd-utils`
 1. Restart the Pi with `reboot`
 1. After the reboot you should see a device called `mtd0` in the directory `/dev`. Note: We assume a fresh Raspbian OS. If you already use another hardware extension it may not work as described here
