@@ -111,7 +111,7 @@ pi@raspberrypi:~ $ wget https://raw.githubusercontent.com/DSP-Crowd/software/mas
 ```
 pi@raspberrypi:~ $ chmod +x update-fpga.sh fpga-reconf.sh
 ```
-3. Run them
+3. Run the script `update-fpga.sh [file]`. The parameter file is optional. The default is `rr_base.bin`
 ```
 pi@raspberrypi:~ $ sudo ./update-fpga.sh rr_base-fast.bin
 Erasing 64 Kibyte @ 50000 -- 100 % complete
