@@ -30,7 +30,7 @@ crw------- 1 root root 90, 0 Mar 29 23:17 /dev/mtd0
 ```
 4. For the initial setup you also need to connect your DE0 Nano to the PC because the initial design must be downloaded with Quartus
 5. On your PC
-   1. Download the initial design file `_hello-world/de0_nano/output/rr_base.sof` to your DE0 Nano board
+   1. Download the initial design file `_hello-world/de0_nano/output/rr_base.sof` to your DE0 Nano board with Quartus
 6. On your Raspberry Pi
    1. ..
 
