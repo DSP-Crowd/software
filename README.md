@@ -107,11 +107,11 @@ This can also be done more convenient with our helper scripts
 pi@raspberrypi:~ $ wget https://raw.githubusercontent.com/DSP-Crowd/software/master/_hello-world/raspberry_pi_zero/scripts/fpga-reconf.sh
 pi@raspberrypi:~ $ wget https://raw.githubusercontent.com/DSP-Crowd/software/master/_hello-world/raspberry_pi_zero/scripts/update-fpga.sh
 ```
-1. Make our scripts executable
+2. Make our scripts executable
 ```
 pi@raspberrypi:~ $ chmod +x update-fpga.sh fpga-reconf.sh
 ```
-1. Run them
+3. Run them
 ```
 pi@raspberrypi:~ $ sudo ./update-fpga.sh rr_base-fast.bin
 Erasing 64 Kibyte @ 50000 -- 100 % complete
