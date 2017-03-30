@@ -41,7 +41,7 @@ crw------- 1 root root 90, 0 Mar 29 23:17 /dev/mtd0
    1. Download the hello world designs for the FPGA:
       1. `wget https://github.com/DSP-Crowd/software/blob/master/_hello-world/de0_nano/output/rr_base.bin` .. Slow blinking hello world led
       1. `wget https://github.com/DSP-Crowd/software/blob/master/_hello-world/de0_nano/output/rr_base-fast.bin` .. Fast blinking hello world led
-   1. Clear the flash device on the DE0 Nano FPGA board
+   1. Clear the flash device, which is on the DE0 Nano FPGA board
 ```
 pi@raspberrypi:~ $ sudo flash_erase /dev/mtd0 0 6
 Erasing 64 Kibyte @ 50000 -- 100 % complete
