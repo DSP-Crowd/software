@@ -88,11 +88,11 @@ Execute the following commands on your Pi:
 ```
 pi@raspberrypi:~ $ echo 18 > /sys/class/gpio/export
 ```
-1. Tell Linux that this pin is used as output
+2. Tell Linux that this pin is used as output
 ```
 pi@raspberrypi:~ $ echo out > /sys/class/gpio/gpio18/direction
 ```
-1. Finally set and then clear pin 18. Setting the pin will initiate the FPGA reconfiguration process
+3. Finally set and then clear pin 18. Setting the pin will initiate the FPGA reconfiguration process
 ```
 pi@raspberrypi:~ $ echo 1 > /sys/class/gpio/gpio18/value
 pi@raspberrypi:~ $ echo 0 > /sys/class/gpio/gpio18/value
