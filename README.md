@@ -23,12 +23,11 @@ Software for the Raspberry Pi to DE0 Nano connector
    1. Add the line `dtoverlay=dspc-de0_nano` in /boot/config.txt
    2. Install the mtd-utils package with `sudo apt-get install mtd-utils`
    3. Restart the Pi with 'reboot'
-   4. After the reboot you should see a device called `mtd0` in the directory `/dev`
+   4. After the reboot you should see a device called `mtd0` in the directory `/dev`. Note: We assume a fresh Raspbian OS. If you already use another hardware extension it may not work as described here
 ```
 pi@raspberrypi:~ $ ls -l /dev/mtd0
 crw------- 1 root root 90, 0 Mar 29 23:17 /dev/mtd0
 ```
-   5. Note: We assume a fresh Raspbian OS. If you already use another hardware extension it may not work as described here
 4. For the initial setup you also need to connect your DE0 Nano to the PC because the initial design must be downloaded with Quartus
 5. On your PC
    1. Download the initial design file `_hello-world/de0_nano/output/rr_base.sof` to your DE0 Nano board with Quartus
