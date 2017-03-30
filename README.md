@@ -22,7 +22,7 @@ Software for the Raspberry Pi to DE0 Nano connector
 3. On your Raspberry Pi
    1. Add the line `dtoverlay=dspc-de0_nano` in /boot/config.txt
    2. Install the mtd-utils package with `sudo apt-get install mtd-utils`
-   3. Restart the Pi with 'reboot'
+   3. Restart the Pi with `reboot`
    4. After the reboot you should see a device called `mtd0` in the directory `/dev`. Note: We assume a fresh Raspbian OS. If you already use another hardware extension it may not work as described here
 ```
 pi@raspberrypi:~ $ ls -l /dev/mtd0
