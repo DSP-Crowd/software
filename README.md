@@ -35,7 +35,7 @@ crw------- 1 root root 90, 0 Mar 29 23:17 /dev/mtd0
 ```
 quartus_pgm --mode=jtag -o p\;rr_base.sof
 ```
-1. On your Raspberry Pi
+6. On your Raspberry Pi
    1. Program the flash on the DE0 Nano board. See "Programming the DE0 Nano after the initial setup"
 1. After that you can remove the cable on the DE0 Nano. You will never need it again
 
