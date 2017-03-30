@@ -99,7 +99,7 @@ pi@raspberrypi:~ $ chmod +x update-fpga.sh fpga-reconf.sh
 ```
 1. Run them
 ```
-pi@raspberrypi:~ $ sudo ./update-fpga.sh
+pi@raspberrypi:~ $ sudo ./update-fpga.sh rr_base-fast.bin
 Erasing 64 Kibyte @ 50000 -- 100 % complete
 411+1 records in
 411+1 records out
