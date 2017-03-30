@@ -4,7 +4,7 @@ Software for the Raspberry Pi to DE0 Nano connector
 
 ## Used hardware ##
 
-- DE0 Nano
+- DSP-Crowd's Raspberry Pi to DE0 Nano connector
 - One of the following Raspberry Pis
   - Raspberry Pi Zero
   - Raspberry Pi Zero W
@@ -12,6 +12,7 @@ Software for the Raspberry Pi to DE0 Nano connector
   - Raspberry Pi 1 Model B+
   - Raspberry Pi 2 Model B
   - Raspberry Pi 3 Model B
+- DE0 Nano
 
 ## Initial setup ##
 
@@ -24,7 +25,6 @@ Software for the Raspberry Pi to DE0 Nano connector
    1. Install the mtd-utils package with `sudo apt-get install mtd-utils`
    1. Restart the Pi with `reboot`
    1. After the reboot you should see a device called `mtd0` in the directory `/dev`. Note: We assume a fresh Raspbian OS. If you already use another hardware extension it may not work as described here
-1. DSP-Crowd's Raspberry Pi to DE0 Nano connector
 ```
 pi@raspberrypi:~ $ ls -l /dev/mtd0
 crw------- 1 root root 90, 0 Mar 29 23:17 /dev/mtd0
