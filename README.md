@@ -20,7 +20,7 @@ Software for the Raspberry Pi to DE0 Nano connector
    2. If you use a Raspberry Pi 1 Model B+ you also need to connect an USB Micro B cable to the Raspberry Pi while it is booting. After that you can remove this cable
 2. Copy the device tree overlay file `_hello-world/raspberry_pi_zero/dts/overlays/dspc-de0_nano.dtbo` from the repository to the directory `/boot/overlays` on your Raspberry Pi
 3. On your Raspberry Pi
-   1. Add the line `dtoverlay=dspc-de0_nano` in /boot/config.txt
+   1. Add the line `dtoverlay=dspc-de0_nano` in `/boot/config.txt`
    2. Install the mtd-utils package with `sudo apt-get install mtd-utils`
    3. Restart the Pi with `reboot`
    4. After the reboot you should see a device called `mtd0` in the directory `/dev`. Note: We assume a fresh Raspbian OS. If you already use another hardware extension it may not work as described here
