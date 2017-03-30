@@ -37,6 +37,7 @@ crw------- 1 root root 90, 0 Mar 29 23:17 /dev/mtd0
 
 ## Programming the DE0 Nano after the initial setup ##
 
-1. On your Raspberry Pi. Download the hello world designs for the FPGA:
-   1. `wget https://github.com/DSP-Crowd/software/blob/master/_hello-world/de0_nano/output/rr_base.bin` .. Slow blinking hello world led
-   2. `wget https://github.com/DSP-Crowd/software/blob/master/_hello-world/de0_nano/output/rr_base-fast.bin` .. Fast blinking hello world led
+1. On your Raspberry Pi
+   1. Download the hello world designs for the FPGA:
+      1. `wget https://github.com/DSP-Crowd/software/blob/master/_hello-world/de0_nano/output/rr_base.bin` .. Slow blinking hello world led
+      2. `wget https://github.com/DSP-Crowd/software/blob/master/_hello-world/de0_nano/output/rr_base-fast.bin` .. Fast blinking hello world led
