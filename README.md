@@ -16,36 +16,44 @@ Software for the Raspberry Pi to DE0 Nano connector
 
 ## Initial setup ##
 
-1. Power up the system
-   1. Connect an USB Micro B cable to the connector board. We recommend the official Raspberry Pi power supply as source
-   1. If you use a Raspberry Pi 1 Model B+ you also need to connect an USB Micro B cable to the Raspberry Pi while it is booting. After that you can remove this cable
-1. On your Raspberry Pi
-   1. Copy the device tree overlay file `_hello-world/raspberry_pi_zero/dts/overlays/dspc-de0_nano.dtbo` from the repository to the directory `/boot/overlays` on your Raspberry Pi
+The following steps must be done only once
+
+### Power up the system ###
+1. Connect an USB Micro B cable to the connector board. We recommend the official Raspberry Pi power supply as source
+1. For the initial setup you also need to connect your DE0 Nano to the PC, because the initial design must be downloaded with Quartus
+1. If you use a Raspberry Pi 1 Model B+ you also need to connect an USB Micro B cable to the Raspberry Pi while it is booting. After that you can remove this cable
+
+### On your Raspberry Pi ###
+1. Copy the device tree overlay file `_hello-world/raspberry_pi_zero/dts/overlays/dspc-de0_nano.dtbo` from the repository to the directory `/boot/overlays` on your Raspberry Pi
 ```
-wget https://raw.githubusercontent.com/DSP-Crowd/software/master/_hello-world/raspberry_pi_zero/dts/overlays/dspc-de0_nano.dtbo
+pi@raspberrypi:~ $ sudo wget https://raw.githubusercontent.com/DSP-Crowd/software/master/_hello-world/raspberry_pi_zero/dts/overlays/dspc-de0_nano.dtbo -P /boot/overlays
 ```
-   1. Add the line `dtoverlay=dspc-de0_nano` in `/boot/config.txt`
-   1. Install the mtd-utils package with `sudo apt-get install mtd-utils`
-   1. Restart the Pi with `reboot`
-   1. After the reboot you should see a device called `mtd0` in the directory `/dev`. Note: We assume a fresh Raspbian OS. If you already use another hardware extension it may not work as described here
+1. Add the line `dtoverlay=dspc-de0_nano` in `/boot/config.txt`
+1. Install the mtd-utils package with `sudo apt-get install mtd-utils`
+1. Restart the Pi with `reboot`
+1. After the reboot you should see a device called `mtd0` in the directory `/dev`. Note: We assume a fresh Raspbian OS. If you already use another hardware extension it may not work as described here
 ```
 pi@raspberrypi:~ $ ls -l /dev/mtd0
 crw------- 1 root root 90, 0 Mar 29 23:17 /dev/mtd0
 ```
-4. For the initial setup you also need to connect your DE0 Nano to the PC because the initial design must be downloaded with Quartus
-1. On your PC
-   1. Download the initial design file `_hello-world/de0_nano/output/rr_base.sof` to your DE0 Nano board with Quartus
-   1. You can use this command
+
+### On your PC or Laptop ###
+1. Download the initial design file `_hello-world/de0_nano/output/rr_base.sof`
+1. Program the design file to your DE0 Nano board with Quartus. You can use the following command
 ```
 quartus_pgm --mode=jtag -o p\;rr_base.sof
 ```
-6. On your Raspberry Pi
-   1. Program the flash on the DE0 Nano board. See "Programming the DE0 Nano after the initial setup"
+
+### On your Raspberry Pi ###
+1. Program the flash on the DE0 Nano board. See "Programming the DE0 Nano after the initial setup"
+
+### Final step ###
 1. After that you can remove the cable on the DE0 Nano. You will never need it again
 
 ## Programming the DE0 Nano after the initial setup ##
 
 In this section, everything is done on the Raspberry Pi
+
 1. Download the hello world designs for the FPGA:
    1. `wget https://raw.githubusercontent.com/DSP-Crowd/software/master/_hello-world/de0_nano/output/rr_base.bin` .. Slow blinking hello world led
    1. `wget https://raw.githubusercontent.com/DSP-Crowd/software/master/_hello-world/de0_nano/output/rr_base-fast.bin` .. Fast blinking hello world led
