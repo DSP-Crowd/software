@@ -184,12 +184,54 @@
         "z": "c82a4e3c.c3b84",
         "command": "sudo /home/pi/software/examples/mobile_rgb-led/raspberry_pi_zero/scripts/update-fpga.sh",
         "addpay": false,
-        "append": "/home/pi/software/_hello-world/de0_nano/output/rr_base-fast.bin",
+        "append": "/home/pi/rr_base.bin",
         "useSpawn": "",
         "timer": "",
         "name": "File Fast",
         "x": 640,
         "y": 480,
+        "wires": [
+            [],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "a60cc7e8.692f48",
+        "type": "ui_button",
+        "z": "c82a4e3c.c3b84",
+        "name": "",
+        "group": "b75ee76a.174068",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "label": "Restart FPGA",
+        "color": "",
+        "bgcolor": "",
+        "icon": "",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "",
+        "x": 360,
+        "y": 540,
+        "wires": [
+            [
+                "5233d997.b0b7a8"
+            ]
+        ]
+    },
+    {
+        "id": "5233d997.b0b7a8",
+        "type": "exec",
+        "z": "c82a4e3c.c3b84",
+        "command": "sudo /home/pi/software/examples/mobile_rgb-led/raspberry_pi_zero/scripts/fpga-reconf.sh",
+        "addpay": false,
+        "append": "",
+        "useSpawn": "",
+        "timer": "",
+        "name": "Reconf",
+        "x": 640,
+        "y": 540,
         "wires": [
             [],
             [],

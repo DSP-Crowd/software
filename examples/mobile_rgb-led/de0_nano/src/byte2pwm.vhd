@@ -95,6 +95,16 @@ begin
 						NxR.counter <= R.counter + 1;
 					end if;
 
+					if(R.counter = 254)then
+						NxR.counter <= 0;
+						if(R.counter_buf /= 0)then
+							NxR.counter_max <= R.counter_buf;
+							NxR.sm_step <= SM_HIGH;
+						else
+							NxR.sm_step <= SM_LOW;
+						end if;
+					end if;
+
 				when others =>
 					NxR.sm_step <= SM_LOW;
 			end case;

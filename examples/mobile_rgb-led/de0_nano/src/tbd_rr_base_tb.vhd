@@ -40,7 +40,7 @@ architecture bhv of tb_rr_base is
 	-- Constants
 	----------------------------------------------------------------------------------
 	-- System
-	constant c_spi_rate         : natural := 10E6;
+	constant c_spi_rate         : natural := 99E5; -- Should be something weird => Detect more errors
 	constant c_bit_with_half_t  : time := 1E9 ns / c_spi_rate;
 	constant c_byte_pad_t       : time := 5 * c_bit_with_half_t;
 	constant SPI_USER_CS_IDX    : natural := 1;
@@ -249,6 +249,7 @@ Stimu : process
 
     spi_send_rgb(X"AB", X"CD", X"EF");
     spi_send_rgb(X"00", X"01", X"FE");
+    spi_send_rgb(X"00", X"FF", X"FE");
 
 -----------------------------------------------------------------------------------------------------------
 -- ########################################################################################################
