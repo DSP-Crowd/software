@@ -1,16 +1,7 @@
 #!/bin/bash
 
-pin_nr=4
-scriptname="$(dirname $0)/spiarray.py"
-param=$1
-red=${param:0:2}
-green=${param:2:2}
-blue=${param:4:2}
-rgb="$red $green $blue"
+red=${1:0:2}
+green=${1:2:2}
+blue=${1:4:2}
 
-#echo $scriptname
-#echo "sendrgb.sh: input is '$param'"
-echo "sendrgb.sh: rgb is '$rgb'"
-
-echo ". Output is: "
-python $scriptname 00 00 $rgb | tr [a-z] [A-Z]
+echo -ne "\x00\x00\x$red\x$green\x$blue" > /dev/spidev0.3
