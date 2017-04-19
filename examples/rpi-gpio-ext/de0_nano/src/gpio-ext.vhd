@@ -51,7 +51,9 @@ entity gpio_ext is
 		input_state_valid	: out  std_ulogic;
 		cmd_done		: out  std_ulogic;
 
-		gpio			: inout std_logic
+		gpio_in			: in   std_ulogic;
+		gpio_out		: out  std_ulogic;
+		gpio_en			: out  std_ulogic
 	);
 begin
 	assert (my_id >= 0)
@@ -68,7 +70,7 @@ architecture rtl of gpio_ext is
 
 	type GPIO_TYPE is
 	(
-		GPIO_IN, GPIO_OUT, GPIO_PWM
+		GPIO_INPUT, GPIO_OUTPUT, GPIO_PWM
 	);
 
 	subtype BYTE_IDX_TYPE is integer range 0 to 3;
@@ -82,7 +84,7 @@ architecture rtl of gpio_ext is
 		byte_idx		: BYTE_IDX_TYPE;
 		tmp			: std_ulogic_vector(23 downto 0);
 		gpio_type		: GPIO_TYPE;
-		gpio			: std_logic;
+		gpio			: std_ulogic;
 	end record;
 
 	constant RSET_INIT_VAL : REG_TYPE :=
@@ -94,23 +96,28 @@ architecture rtl of gpio_ext is
 		counter_mid		=> 0,
 		byte_idx		=> 0,
 		tmp			=> (others => '0'),
-		gpio_type		=> GPIO_IN,
-		gpio			=> 'Z'
+		gpio_type		=> GPIO_INPUT,
+		gpio			=> '0'
 	);
 
 	signal R, NxR			: REG_TYPE;
 
 begin
 
-	proc_comb: process(R, spi_cs, data, data_is_id, data_valid, gpio)
+	proc_comb: process(R, spi_cs, data, data_is_id, data_valid, gpio_in)
 	begin
 		NxR <= R;
 
 		input_state <= '0';
 		input_state_valid <= '0';
 		cmd_done <= '0';
+		gpio_out <= R.gpio;
 
-		gpio <= R.gpio;
+		if(R.gpio_type = GPIO_OUTPUT or R.gpio_type = GPIO_PWM)then
+			gpio_en <= '1';
+		else
+			gpio_en <= '0';
+		end if;
 
 		if(R.gpio_type = GPIO_PWM)then
 			if(R.counter < R.counter_max - 1)then
@@ -140,25 +147,21 @@ begin
 
 			when SM_CHECK_CMD =>
 				if(R.data(1 downto 0) = "00")then	-- read
-					NxR.gpio_type <= GPIO_IN;
-					NxR.gpio <= 'Z';
+					NxR.gpio_type <= GPIO_INPUT;
 
 					NxR.sm_step <= SM_GET_INPUT;
 				elsif(R.data(1 downto 0) = "01")then	-- write
-					NxR.gpio_type <= GPIO_OUT;
+					NxR.gpio_type <= GPIO_OUTPUT;
 
 					NxR.sm_step <= SM_SET_OUTPUT;
 				else					-- pwm
 					NxR.byte_idx <= 3;
 
-					input_state <= gpio;
-					input_state_valid <= '1';
-
 					NxR.sm_step <= SM_GET_COUNTER_MAX;
 				end if;
 
 			when SM_GET_INPUT =>
-				input_state <= gpio;
+				input_state <= gpio_in;
 				input_state_valid <= '1';
 
 				NxR.sm_step <= SM_GET_DUMMY;

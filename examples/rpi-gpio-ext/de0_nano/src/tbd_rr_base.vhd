@@ -91,6 +91,10 @@ architecture rtl of tbd_rr_base is
 	signal spi_slave_input_state_valid_res	: std_ulogic_vector(0 to num_gpios - 1);
 	signal spi_slave_cmd_done_res		: std_ulogic_vector(0 to num_gpios - 1);
 
+	signal gpio_in				: std_logic_vector(0 to num_gpios - 1);
+	signal gpio_out				: std_logic_vector(0 to num_gpios - 1);
+	signal gpio_en				: std_logic_vector(0 to num_gpios - 1);
+
 begin
 
 	-- Reconfiguration unit
@@ -220,9 +224,14 @@ begin
 			input_state_valid	=> spi_slave_input_state_valid(i),
 			cmd_done		=> spi_slave_cmd_done(i),
 
-			gpio			=> gpios(i)
+			gpio_in			=> gpio_in(i),
+			gpio_out		=> gpio_out(i),
+			gpio_en			=> gpio_en(i)
 		);
+
+		gpios(i) <= gpio_out(i) when gpio_en(i) = '1' else 'Z';
 	end generate;
+	gpio_in <= gpios;
 
 	or_blocks: for i in 0 to num_gpios - 2 generate
 		spi_slave_input_state_res	(i) <= spi_slave_input_state_res	(i + 1) or spi_slave_input_state		(i);
