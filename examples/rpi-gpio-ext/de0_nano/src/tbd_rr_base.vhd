@@ -45,9 +45,6 @@ entity tbd_rr_base is
 		switches	: in    std_ulogic_vector(3 downto 0);
 		leds		: out   std_ulogic_vector(7 downto 0);
 
-		uart_rx		: in    std_ulogic;
-		uart_tx		: out   std_ulogic;
-
 		spi_cs		: in    std_ulogic_vector(1 downto 0);
 		spi_clk		: in    std_ulogic;
 		spi_mosi	: in    std_ulogic;
@@ -60,19 +57,7 @@ entity tbd_rr_base is
 
 		arReconf	: in    std_ulogic;
 
-		gpios		: inout std_logic_vector(0 to num_gpios - 1);
-
-		sdram_addr	: out   std_logic_vector(12 downto 0);
-		sdram_ba	: out   std_logic_vector(1 downto 0);
-		sdram_cke	: out   std_logic;
-		sdram_clk	: out   std_logic;
-		sdram_cs_n	: out   std_logic;
-		--sdram_dq          : inout std_logic_vector(15 downto 0);
-		sdram_dq	: in    std_logic_vector(15 downto 0);
-		sdram_dqm	: out   std_logic_vector(1 downto 0);
-		sdram_cas_n	: out   std_logic;
-		sdram_ras_n	: out   std_logic;
-		sdram_we_n	: out   std_logic
+		gpios		: inout std_logic_vector(0 to num_gpios - 1)
 	);
 end tbd_rr_base;
 

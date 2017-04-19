@@ -61,9 +61,6 @@ architecture bhv of tb_rr_base is
 	signal switches           : std_ulogic_vector(3 downto 0);
 	signal leds               : std_ulogic_vector(7 downto 0);
 
-	signal gdb_tx             : std_ulogic := '1';
-	signal gdb_rx             : std_ulogic;
-
 	signal spi_cs             : std_ulogic_vector(1 downto 0) := (others => '1');
 	signal spi_clk            : std_ulogic := '0';
 	signal spi_mosi           : std_ulogic := '0';
@@ -77,18 +74,6 @@ architecture bhv of tb_rr_base is
 	signal arReconf           : std_ulogic;
 
 	signal gpios              : std_logic_vector(0 to num_gpios - 1);
-
-	signal sdram_addr         : std_logic_vector(12 downto 0);
-	signal sdram_ba           : std_logic_vector(1 downto 0);
-	signal sdram_cke          : std_logic;
-	signal sdram_clk          : std_logic;
-	signal sdram_cs_n         : std_logic;
-	signal sdram_dq           : std_logic_vector(15 downto 0);
-	signal sdram_dqm          : std_logic_vector(1 downto 0);
-	signal sdram_cas_n        : std_logic;
-	signal sdram_ras_n        : std_logic;
-	signal sdram_we_n         : std_logic;
-	signal sdram_ctrl_str     : string(1 to 5);
 
 begin
 
@@ -110,9 +95,6 @@ begin
 		switches          => switches,
 		leds              => leds,
 
-		uart_rx           => gdb_tx,
-		uart_tx           => gdb_rx,
-
 		spi_cs            => spi_cs,
 		spi_clk           => spi_clk,
 		spi_mosi          => spi_mosi,
@@ -125,86 +107,8 @@ begin
 
 		arReconf          => arReconf,
 
-		gpios		  => gpios,
-
-		sdram_addr        => sdram_addr,
-		sdram_ba          => sdram_ba,
-		sdram_cke         => sdram_cke,
-		sdram_clk         => sdram_clk,
-		sdram_cs_n        => sdram_cs_n,
-		sdram_dq          => sdram_dq,
-		sdram_dqm         => sdram_dqm,
-		sdram_cas_n       => sdram_cas_n,
-		sdram_ras_n       => sdram_ras_n,
-		sdram_we_n        => sdram_we_n
+		gpios		  => gpios
 	);
-
-	altera_sdram : if (c_use_issi_sdram = '0') generate
-	eSDRAM : entity work.sdram_0_test_component(europa)
-	port map
-	(
-		-- inputs:
-		clk             => sdram_clk,
-		ZS_ADDR         => sdram_addr,
-		zs_ba           => sdram_ba,
-		zs_cas_n        => sdram_cas_n,
-		zs_cke          => sdram_cke,
-		zs_cs_n         => sdram_cs_n,
-		zs_dqm          => sdram_dqm,
-		zs_ras_n        => sdram_ras_n,
-		zs_we_n         => sdram_we_n,
-
-		-- outputs:
-		zs_dq           => sdram_dq
-	);
-	end generate;
-
-	issi_sdram : if (c_use_issi_sdram = '1') generate
-	eSDRAM_issi : entity work.IS42S16160
-	port map
-	(
-		Dq              => sdram_dq,
-		Addr            => sdram_addr,
-		Ba              => sdram_ba,
-		Clk             => sdram_clk,
-		Cke             => sdram_cke,
-		Cs_n            => sdram_cs_n,
-		Ras_n           => sdram_ras_n,
-		Cas_n           => sdram_cas_n,
-		We_n            => sdram_we_n,
-		Dqm             => sdram_dqm
-	);
-	end generate;
-
-	sdram_ctrl_debug: process(sdram_cs_n, sdram_ras_n, sdram_cas_n, sdram_we_n)
-		variable ctrl_vect : std_logic_vector(2 downto 0);
-	begin
-		ctrl_vect := sdram_ras_n & sdram_cas_n & sdram_we_n;
-
-		if(sdram_cs_n = '1')then
-			sdram_ctrl_str <= "DESL ";
-		else
-			case ctrl_vect is
-			when "111" =>
-				sdram_ctrl_str <= "NOP  ";
-			when "101" =>
-				sdram_ctrl_str <= "READ ";
-			when "100" =>
-				sdram_ctrl_str <= "WRITE";
-			when "011" =>
-				sdram_ctrl_str <= "ACT  ";
-			when "010" =>
-				sdram_ctrl_str <= "PALL ";
-			when "001" =>
-				sdram_ctrl_str <= "REF  ";
-			when "000" =>
-				sdram_ctrl_str <= "MRS  ";
-			when others =>
-				sdram_ctrl_str <= "???  ";
-			end case;
-		end if;
-	end process;
-
 
 ----------------------------------------------------------------------------------------------------------------------------
 -- Testing process

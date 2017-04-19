@@ -43,8 +43,6 @@ vcom ${src_root}/strobe_gen.vhd
 
 vcom ${src_root}/altremote_pulsed.vhd
 vcom ${src_root}/altremote_pulsed_tb.vhd
-vcom ${src_root}/sdram_0_test_component.vhd
-vlog ${src_root}/42s16160.v
 vcom ${src_root}/spi-slave.vhd
 vcom ${src_root}/gpio-ext.vhd
 
