@@ -71,13 +71,15 @@ architecture rtl of gpio_ext is
 		GPIO_IN, GPIO_OUT, GPIO_PWM
 	);
 
+	subtype BYTE_IDX_TYPE is integer range 0 to 3;
+
 	type REG_TYPE is record
 		sm_step			: STATEMACHINE_MAIN_STEP_TYPE;
 		data			: std_ulogic_vector(7 downto 0);
 		counter			: natural;
 		counter_max		: natural;
 		counter_mid		: natural;
-		byte_idx		: natural;
+		byte_idx		: BYTE_IDX_TYPE;
 		tmp			: std_ulogic_vector(23 downto 0);
 		gpio_type		: GPIO_TYPE;
 		gpio			: std_logic;
