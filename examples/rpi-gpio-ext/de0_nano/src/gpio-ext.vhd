@@ -51,7 +51,7 @@ entity gpio_ext is
 		input_state_valid	: out  std_ulogic;
 		cmd_done		: out  std_ulogic;
 
-		gpio			: inout std_ulogic
+		gpio			: inout std_logic
 	);
 begin
 	assert (my_id >= 0)
@@ -80,7 +80,7 @@ architecture rtl of gpio_ext is
 		byte_idx		: natural;
 		tmp			: std_ulogic_vector(23 downto 0);
 		gpio_type		: GPIO_TYPE;
-		gpio			: std_ulogic;
+		gpio			: std_logic;
 	end record;
 
 	constant RSET_INIT_VAL : REG_TYPE :=
