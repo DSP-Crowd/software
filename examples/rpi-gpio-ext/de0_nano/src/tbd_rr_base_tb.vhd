@@ -41,7 +41,7 @@ architecture bhv of tb_rr_base is
 	----------------------------------------------------------------------------------
 	-- System
 	constant c_spi_rate         : natural := 99E5; -- Should be something weird => Detect more errors
-	constant c_bit_with_half_t  : time := 1E9 ns / c_spi_rate;
+	constant c_bit_with_half_t  : time := 1E9 ns / (2 * c_spi_rate);
 	constant c_byte_pad_t       : time := 5 * c_bit_with_half_t;
 	constant SPI_USER_CS_IDX    : natural := 1;
 
