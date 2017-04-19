@@ -174,6 +174,7 @@ begin
 		nResetAsync	=> n_reset_async,
 		output		=> leds(0)
 	);
+	leds(7 downto 1) <= (others => '0');
 
 	-- SPI-Slave
 	spislave: entity work.spi_slave(rtl)
