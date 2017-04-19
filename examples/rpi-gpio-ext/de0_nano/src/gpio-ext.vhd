@@ -147,12 +147,12 @@ begin
 
 					NxR.sm_step <= SM_SET_OUTPUT;
 				else					-- pwm
-					--NxR.gpio_type <= GPIO_PWM;
+					NxR.byte_idx <= 3;
 
 					input_state <= gpio;
 					input_state_valid <= '1';
 
-					NxR.sm_step <= SM_GET_DUMMY;
+					NxR.sm_step <= SM_GET_COUNTER_MAX;
 				end if;
 
 			when SM_GET_INPUT =>
@@ -174,6 +174,33 @@ begin
 					NxR.gpio <= data(0);
 
 					NxR.sm_step <= SM_WAIT_SELECTED;
+				end if;
+
+			when SM_GET_COUNTER_MAX =>
+				if(data_valid = '1')then
+					if(R.byte_idx = 0)then
+						NxR.counter_max <= to_integer(unsigned(R.tmp & data));
+						NxR.byte_idx <= 3;
+
+						NxR.sm_step <= SM_GET_COUNTER_MID;
+					else
+						NxR.tmp(8 * R.byte_idx - 1 downto 8 * (R.byte_idx - 1)) <= data;
+						NxR.byte_idx <= R.byte_idx - 1;
+					end if;
+				end if;
+
+			when SM_GET_COUNTER_MID =>
+				if(data_valid = '1')then
+					if(R.byte_idx = 0)then
+						NxR.counter_mid <= to_integer(unsigned(R.tmp & data));
+						NxR.gpio_type <= GPIO_PWM;
+						cmd_done <= '1';
+
+						NxR.sm_step <= SM_WAIT_SELECTED;
+					else
+						NxR.tmp(8 * R.byte_idx - 1 downto 8 * (R.byte_idx - 1)) <= data;
+						NxR.byte_idx <= R.byte_idx - 1;
+					end if;
 				end if;
 
 			when others =>
