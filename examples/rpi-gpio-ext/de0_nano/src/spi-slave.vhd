@@ -96,12 +96,6 @@ begin
 		data_is_id <= '0';
 		data_valid <= '0';
 
-		if(R.bit_idx = 0)then
-			spi_miso <= R.input_state;
-		else
-			spi_miso <= '0';
-		end if;
-
 		case R.smb_step is
 			when SMB_GET_DATA_BIT =>
 				if(spi_clk = '1')then
@@ -120,6 +114,12 @@ begin
 						NxR.spi_byte_done <= '1';
 					else
 						NxR.bit_idx <= R.bit_idx - 1;
+					end if;
+
+					if(R.bit_idx = 1)then
+						spi_miso <= R.input_state;
+					else
+						spi_miso <= '0';
 					end if;
 				end if;
 
