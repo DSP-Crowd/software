@@ -328,9 +328,9 @@ set_global_assignment -name GENERATE_RBF_FILE ON
 
 
 
-set_global_assignment -name VHDL_FILE ../src/byte2pwm.vhd
-set_global_assignment -name VHDL_FILE ../src/spi2rgb_pkg.vhd
-set_global_assignment -name VHDL_FILE ../src/spi2rgb.vhd
+
+set_global_assignment -name VHDL_FILE "../src/gpio-ext.vhd"
+set_global_assignment -name VHDL_FILE "../src/spi-slave.vhd"
 set_global_assignment -name QSYS_FILE altremote.qsys
 set_global_assignment -name VHDL_FILE ../src/altremote_pulsed.vhd
 set_global_assignment -name VHDL_FILE ../src/tbd_rr_base.vhd
