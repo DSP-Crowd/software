@@ -73,8 +73,10 @@ architecture rtl of gpio_ext is
 		sm_step			: STATEMACHINE_MAIN_STEP_TYPE;
 		data			: std_ulogic_vector(7 downto 0);
 		counter			: natural;
-		counter_mid		: natural;
 		counter_max		: natural;
+		counter_mid		: natural;
+		byte_idx		: natural;
+		tmp			: std_ulogic_vector(23 downto 0);
 		gpio_type		: GPIO_TYPE;
 		gpio			: std_ulogic;
 	end record;
@@ -84,8 +86,10 @@ architecture rtl of gpio_ext is
 		sm_step			=> SM_WAIT_SELECTED,
 		data			=> (others => '0'),
 		counter			=> 0,
-		counter_mid		=> 0,
 		counter_max		=> 0,
+		counter_mid		=> 0,
+		byte_idx		=> 0,
+		tmp			=> (others => '0'),
 		gpio_type		=> GPIO_IN,
 		gpio			=> 'Z'
 	);
