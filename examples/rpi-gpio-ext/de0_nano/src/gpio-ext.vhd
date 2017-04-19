@@ -41,6 +41,8 @@ entity gpio_ext is
 		clock			: in   std_ulogic;
 		n_reset_async		: in   std_ulogic;
 
+		spi_cs			: in  std_ulogic;
+
 		data			: in   std_ulogic_vector(7 downto 0);
 		data_is_id		: in   std_ulogic;
 		data_valid		: in   std_ulogic;
@@ -98,7 +100,7 @@ architecture rtl of gpio_ext is
 
 begin
 
-	proc_comb: process(R, data, data_is_id, data_valid, gpio)
+	proc_comb: process(R, spi_cs, data, data_is_id, data_valid, gpio)
 	begin
 		NxR <= R;
 
@@ -177,6 +179,10 @@ begin
 			when others =>
 				NxR.sm_step <= SM_WAIT_SELECTED;
 		end case;
+
+		if(spi_cs = '1')then
+			NxR.sm_step <= SM_WAIT_SELECTED;
+		end if;
 
 	end process;
 

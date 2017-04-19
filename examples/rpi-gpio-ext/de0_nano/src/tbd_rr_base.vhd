@@ -224,6 +224,8 @@ begin
 			clock			=> clock_50mhz,
 			n_reset_async		=> n_reset_async,
 
+			spi_cs			=> spi_cs_user_synced,
+
 			data			=> spi_slave_data,
 			data_is_id		=> spi_slave_data_is_id,
 			data_valid		=> spi_slave_data_valid,
