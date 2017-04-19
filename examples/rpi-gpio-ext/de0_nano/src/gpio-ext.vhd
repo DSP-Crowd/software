@@ -136,12 +136,12 @@ begin
 
 			when SM_CHECK_CMD =>
 				if(R.data(1 downto 0) = "00")then	-- read
-					NxR.gpio_type <= GPIO_INPUT;
+					NxR.gpio_type <= GPIO_IN;
 					NxR.gpio <= 'Z';
 
 					NxR.sm_step <= SM_GET_INPUT;
 				elsif(R.data(1 downto 0) = "01")then	-- write
-					NxR.gpio_type <= GPIO_OUTPUT;
+					NxR.gpio_type <= GPIO_OUT;
 
 					NxR.sm_step <= SM_SET_OUTPUT;
 				else					-- pwm
