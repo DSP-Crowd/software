@@ -209,6 +209,7 @@ begin
 ----------------------------------------------------------------------------------------------------------------------------
 -- Testing process
 Stimu : process
+
         procedure spi_select is
         begin
             wait for c_byte_pad_t;
