@@ -157,10 +157,6 @@ begin
 				NxR.sm_step <= SM_WAIT_CS_LOW;
 		end case;
 
-		if(spi_cs = '1')then
-			NxR.sm_step <= SM_WAIT_CS_LOW;
-		end if;
-
 		if(input_state_valid = '1')then
 			NxR.input_state <= input_state;
 		end if;
@@ -170,6 +166,11 @@ begin
 
 			NxR.smb_step <= SMB_GET_DATA_BIT;
 			NxR.sm_step <= SM_GET_ID;
+		end if;
+
+		if(spi_cs = '1')then
+			NxR.smb_step <= SMB_IDLE;
+			NxR.sm_step <= SM_WAIT_CS_LOW;
 		end if;
 
 	end process;
