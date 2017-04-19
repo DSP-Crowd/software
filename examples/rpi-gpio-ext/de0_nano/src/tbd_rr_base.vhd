@@ -121,7 +121,7 @@ begin
 	generic map
 	(
 		num_inputs      => inputs_unsynced'length,
-		num_sync_stages => 2
+		num_sync_stages => 1
 	)
 	port map
 	(
