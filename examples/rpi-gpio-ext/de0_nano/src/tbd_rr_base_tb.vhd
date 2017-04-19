@@ -76,7 +76,7 @@ architecture bhv of tb_rr_base is
 
 	signal arReconf           : std_ulogic;
 
-	signal gpios              : std_logic_vector(0 to num_gpios - 1) := (others => 'H');
+	signal gpios              : std_logic_vector(0 to num_gpios - 1);
 
 	signal sdram_addr         : std_logic_vector(12 downto 0);
 	signal sdram_ba           : std_logic_vector(1 downto 0);
@@ -238,69 +238,321 @@ Stimu : process
             spi_mosi <= '0';
             wait for c_byte_pad_t;
         end procedure;
+
+        procedure spi_send_byte_broken(dat : in std_ulogic_vector(7 downto 0)) is
+        begin
+            for i in 3 downto 0 loop
+                spi_mosi <= dat(i);
+                wait for c_bit_with_half_t;
+                spi_clk <= '1';
+                wait for c_bit_with_half_t;
+                spi_clk <= '0';
+            end loop;
+            spi_mosi <= '0';
+            wait for c_byte_pad_t;
+        end procedure;
+
   begin
 
 -- ########################################################################################################
 -----------------------------------------------------------------------------------------------------------
 -- Testing Code
+	wait for 10 ns;
+
+	gpios <= (others => 'H');
 
 	wait for 1 us;
 
 	spi_select;
 
 	gpios(2) <= 'L';
-	spi_send_byte(X"02"); -- GPIO in low
+	spi_send_byte(X"02"); -- IN
 	spi_send_byte(X"00");
 	spi_send_byte(X"00");
-
-	-- set pin high
 
 	gpios(2) <= 'H';
-	spi_send_byte(X"02"); -- GPIO in high
+	spi_send_byte(X"02"); -- IN
+	spi_send_byte(X"00");
+	spi_send_byte(X"00");
+	--spi_send_byte(X"C3"); -- Garbage
+
+	wait for 1 us;
+
+	gpios(2) <= 'H';
+	spi_send_byte(X"02"); -- OUT
+	spi_send_byte(X"01");
+	spi_send_byte(X"00");
+	--spi_send_byte(X"C3"); -- Garbage
+
+	spi_send_byte(X"02"); -- OUT
+	spi_send_byte(X"01");
+	spi_send_byte(X"01");
+	--spi_send_byte(X"C3"); -- Garbage
+
+	spi_send_byte(X"02"); -- OUT
+	spi_send_byte(X"01");
+	spi_send_byte(X"00");
+
+	wait for 1 us;
+
+	gpios(2) <= 'L';
+	spi_send_byte(X"02"); -- IN
+	spi_send_byte(X"00");
+	spi_send_byte(X"00");
+
+	gpios(2) <= 'H';
+	spi_send_byte(X"02"); -- IN
+	spi_send_byte(X"00");
+	spi_send_byte(X"00");
+
+	wait for 1 us;
+
+	spi_send_byte(X"02"); -- PWM
+	spi_send_byte(X"02");
+
+	spi_send_byte(X"00");
+	spi_send_byte(X"00");
+	spi_send_byte(X"00");
+	spi_send_byte(X"05");
+
+	spi_send_byte(X"00");
+	spi_send_byte(X"00");
+	spi_send_byte(X"00");
+	spi_send_byte(X"00");
+
+	wait for 1 us;
+
+	spi_send_byte(X"02"); -- PWM
+	spi_send_byte(X"02");
+
+	spi_send_byte(X"00");
+	spi_send_byte(X"00");
+	spi_send_byte(X"00");
+	spi_send_byte(X"05");
+
+	spi_send_byte(X"00");
+	spi_send_byte(X"00");
+	spi_send_byte(X"00");
+	spi_send_byte(X"01");
+	--spi_send_byte(X"C3"); -- Garbage
+
+	wait for 1 us;
+
+	spi_send_byte(X"02"); -- PWM
+	spi_send_byte(X"02");
+
+	spi_send_byte(X"00");
+	spi_send_byte(X"00");
+	spi_send_byte(X"00");
+	spi_send_byte(X"05");
+
+	spi_send_byte(X"00");
+	spi_send_byte(X"00");
+	spi_send_byte(X"00");
+	spi_send_byte(X"02");
+
+	wait for 1 us;
+
+	spi_send_byte(X"02"); -- PWM
+	spi_send_byte(X"02");
+
+	spi_send_byte(X"00");
+	spi_send_byte(X"00");
+	spi_send_byte(X"00");
+	spi_send_byte(X"05");
+
+	spi_send_byte(X"00");
+	spi_send_byte(X"00");
+	spi_send_byte(X"00");
+	spi_send_byte(X"04");
+
+	wait for 1 us;
+
+	spi_send_byte(X"02"); -- PWM
+	spi_send_byte(X"02");
+
+	spi_send_byte(X"00");
+	spi_send_byte(X"00");
+	spi_send_byte(X"00");
+	spi_send_byte(X"05");
+
+	spi_send_byte(X"00");
+	spi_send_byte(X"00");
+	spi_send_byte(X"00");
+	spi_send_byte(X"05");
+
+	wait for 1 us;
+
+	spi_send_byte(X"02"); -- PWM
+	spi_send_byte(X"02");
+
+	spi_send_byte(X"00");
+	spi_send_byte(X"00");
+	spi_send_byte(X"00");
+	spi_send_byte(X"05");
+
+	spi_send_byte(X"00");
+	spi_send_byte(X"00");
+	spi_send_byte(X"00");
+	spi_send_byte(X"03");
+
+	wait for 1 us;
+
+	gpios(2) <= 'H';
+	spi_send_byte(X"02"); -- IN
+	spi_send_byte(X"00");
+	spi_send_byte(X"00");
+
+	gpios(2) <= 'L';
+	spi_send_byte(X"02"); -- IN
+	spi_send_byte(X"00");
+	spi_send_byte(X"00");
+
+	gpios(2) <= 'H';
+	spi_send_byte(X"02"); -- IN
+	spi_send_byte(X"00");
+	--spi_send_byte(X"00");
+
+	spi_deselect;
+
+	spi_select;
+
+	gpios(2) <= 'L';
+	spi_send_byte(X"02"); -- IN
+	spi_send_byte(X"00");
+	spi_send_byte(X"00");
+
+	gpios(2) <= 'H';
+	spi_send_byte(X"02"); -- IN
 	spi_send_byte(X"00");
 	spi_send_byte(X"00");
 
 	wait for 1 us;
 
 	gpios(2) <= 'H';
-	spi_send_byte(X"02"); -- GPIO out low
+	spi_send_byte(X"02"); -- OUT
 	spi_send_byte(X"01");
 	spi_send_byte(X"00");
 
-	spi_send_byte(X"02"); -- GPIO out high
+	spi_send_byte(X"02"); -- OUT
 	spi_send_byte(X"01");
 	spi_send_byte(X"01");
 
-	spi_send_byte(X"02"); -- GPIO out low
+	spi_send_byte(X"02"); -- OUT
 	spi_send_byte(X"01");
 	spi_send_byte(X"00");
 
 	wait for 1 us;
 
-	gpios(2) <= '0';
-	spi_send_byte(X"02"); -- GPIO in low
+	gpios(2) <= 'L';
+	spi_send_byte(X"02"); -- IN
 	spi_send_byte(X"00");
 	spi_send_byte(X"00");
 
-	-- set pin high
-
-	gpios(2) <= '1';
-	spi_send_byte(X"02"); -- GPIO in high
+	gpios(2) <= 'H';
+	spi_send_byte(X"02"); -- IN
 	spi_send_byte(X"00");
 	spi_send_byte(X"00");
 
 	wait for 1 us;
 
-	spi_send_byte(X"02"); -- LED PWM
-	spi_send_byte(X"10");
+	spi_send_byte(X"02"); -- PWM
+	spi_send_byte(X"02");
+
+	spi_send_byte(X"00");
+	spi_send_byte(X"00");
+	spi_send_byte(X"00");
+	spi_send_byte(X"05");
 
 	spi_send_byte(X"00");
 	spi_send_byte(X"00");
 	spi_send_byte(X"00");
 	spi_send_byte(X"00");
 
+	wait for 1 us;
+
+	spi_send_byte(X"02"); -- PWM
+	spi_send_byte(X"02");
+
 	spi_send_byte(X"00");
 	spi_send_byte(X"00");
+	spi_send_byte(X"00");
+	spi_send_byte(X"05");
+
+	spi_send_byte(X"00");
+	spi_send_byte(X"00");
+	spi_send_byte(X"00");
+	spi_send_byte(X"01");
+
+	wait for 1 us;
+
+	spi_send_byte(X"02"); -- PWM
+	spi_send_byte(X"02");
+
+	spi_send_byte(X"00");
+	spi_send_byte(X"00");
+	spi_send_byte(X"00");
+	spi_send_byte(X"05");
+
+	spi_send_byte(X"00");
+	spi_send_byte(X"00");
+	spi_send_byte(X"00");
+	spi_send_byte(X"02");
+
+	wait for 1 us;
+
+	spi_send_byte(X"02"); -- PWM
+	spi_send_byte(X"02");
+
+	spi_send_byte(X"00");
+	spi_send_byte(X"00");
+	spi_send_byte(X"00");
+	spi_send_byte(X"05");
+
+	spi_send_byte(X"00");
+	spi_send_byte(X"00");
+	spi_send_byte(X"00");
+	spi_send_byte(X"04");
+
+	wait for 1 us;
+
+	spi_send_byte(X"02"); -- PWM
+	spi_send_byte(X"02");
+
+	spi_send_byte(X"00");
+	spi_send_byte(X"00");
+	spi_send_byte(X"00");
+	spi_send_byte(X"05");
+
+	spi_send_byte(X"00");
+	spi_send_byte(X"00");
+	spi_send_byte(X"00");
+	spi_send_byte(X"05");
+
+	wait for 1 us;
+
+	spi_send_byte(X"02"); -- PWM
+	spi_send_byte(X"02");
+
+	spi_send_byte(X"00");
+	spi_send_byte(X"00");
+	spi_send_byte(X"00");
+	spi_send_byte(X"05");
+
+	spi_send_byte(X"00");
+	spi_send_byte(X"00");
+	spi_send_byte(X"00");
+	spi_send_byte(X"03");
+
+	wait for 1 us;
+
+	gpios(2) <= 'H';
+	spi_send_byte(X"02"); -- IN
+	spi_send_byte(X"00");
+	spi_send_byte(X"00");
+
+	gpios(2) <= 'L';
+	spi_send_byte(X"02"); -- IN
 	spi_send_byte(X"00");
 	spi_send_byte(X"00");
 
