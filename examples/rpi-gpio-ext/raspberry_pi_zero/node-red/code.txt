@@ -1,0 +1,1066 @@
+[
+    {
+        "id": "90feae88.89516",
+        "type": "tab",
+        "label": "GPIO Extension"
+    },
+    {
+        "id": "ca1d478d.c16f48",
+        "type": "ui_colour_picker",
+        "z": "90feae88.89516",
+        "name": "",
+        "label": "Color 2",
+        "group": "3cff295.9f4a0d6",
+        "format": "hex",
+        "outformat": "string",
+        "showSwatch": true,
+        "showPicker": false,
+        "showValue": false,
+        "showAlpha": false,
+        "showLightness": true,
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "topic": "",
+        "x": 100,
+        "y": 520,
+        "wires": [
+            [
+                "4c91b06f.0f597"
+            ]
+        ]
+    },
+    {
+        "id": "5c350d43.81fde4",
+        "type": "exec",
+        "z": "90feae88.89516",
+        "command": "/home/pi/software/examples/rpi-gpio-ext/raspberry_pi_zero/scripts/sendrgb.sh 3F 3D 3C",
+        "addpay": true,
+        "append": "",
+        "useSpawn": "",
+        "timer": "",
+        "name": "sendrgb 3F:3D:3C",
+        "x": 510,
+        "y": 520,
+        "wires": [
+            [
+                "4ebe7c13.2bbe44"
+            ],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "4c91b06f.0f597",
+        "type": "function",
+        "z": "90feae88.89516",
+        "name": "slice hash",
+        "func": "var oMsg = { payload: msg.payload.slice(1) };\nreturn oMsg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 280,
+        "y": 520,
+        "wires": [
+            [
+                "5c350d43.81fde4"
+            ]
+        ]
+    },
+    {
+        "id": "4ebe7c13.2bbe44",
+        "type": "debug",
+        "z": "90feae88.89516",
+        "name": "",
+        "active": false,
+        "console": "false",
+        "complete": "false",
+        "x": 750,
+        "y": 520,
+        "wires": []
+    },
+    {
+        "id": "3efc0a93.47a916",
+        "type": "ui_slider",
+        "z": "90feae88.89516",
+        "name": "",
+        "label": "Position",
+        "group": "2275f293.d76f7e",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "topic": "",
+        "min": "50000",
+        "max": "100000",
+        "step": 1,
+        "x": 100,
+        "y": 1160,
+        "wires": [
+            [
+                "13f5e6cb.1bf009",
+                "b72700a5.668d8"
+            ]
+        ]
+    },
+    {
+        "id": "17c366ba.ca0779",
+        "type": "debug",
+        "z": "90feae88.89516",
+        "name": "",
+        "active": false,
+        "console": "false",
+        "complete": "false",
+        "x": 490,
+        "y": 1220,
+        "wires": []
+    },
+    {
+        "id": "13f5e6cb.1bf009",
+        "type": "function",
+        "z": "90feae88.89516",
+        "name": "dec2hex",
+        "func": "var strShort = msg.payload.toString(16);\nvar strLong = \"0000000000\" + strShort;\nvar res = strLong.slice(-8);\nvar oMsg = { payload: res };\nreturn oMsg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 280,
+        "y": 1160,
+        "wires": [
+            [
+                "17c366ba.ca0779",
+                "adf094a0.e39168"
+            ]
+        ]
+    },
+    {
+        "id": "adf094a0.e39168",
+        "type": "exec",
+        "z": "90feae88.89516",
+        "command": "/home/pi/software/examples/rpi-gpio-ext/raspberry_pi_zero/scripts/setservo.sh 00",
+        "addpay": true,
+        "append": "",
+        "useSpawn": "",
+        "timer": "",
+        "name": "setservo 00",
+        "x": 490,
+        "y": 1160,
+        "wires": [
+            [
+                "f1f66acd.ce6e98"
+            ],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "f1f66acd.ce6e98",
+        "type": "debug",
+        "z": "90feae88.89516",
+        "name": "",
+        "active": false,
+        "console": "false",
+        "complete": "false",
+        "x": 750,
+        "y": 1160,
+        "wires": []
+    },
+    {
+        "id": "797f6d90.666814",
+        "type": "ui_switch",
+        "z": "90feae88.89516",
+        "name": "",
+        "label": "LED 1",
+        "group": "22e66ec1.490cd2",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "topic": "",
+        "style": "",
+        "onvalue": "01",
+        "onvalueType": "str",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "00",
+        "offvalueType": "str",
+        "officon": "",
+        "offcolor": "",
+        "x": 90,
+        "y": 300,
+        "wires": [
+            [
+                "cd67b8c6.6f6e58",
+                "a327331e.23a84",
+                "d7b590bd.782cb"
+            ]
+        ]
+    },
+    {
+        "id": "cd67b8c6.6f6e58",
+        "type": "exec",
+        "z": "90feae88.89516",
+        "command": "/home/pi/software/examples/rpi-gpio-ext/raspberry_pi_zero/scripts/setgpio.sh 37",
+        "addpay": true,
+        "append": "",
+        "useSpawn": "",
+        "timer": "",
+        "name": "set 37",
+        "x": 470,
+        "y": 360,
+        "wires": [
+            [
+                "12725ef6.7944e1"
+            ],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "12725ef6.7944e1",
+        "type": "debug",
+        "z": "90feae88.89516",
+        "name": "",
+        "active": false,
+        "console": "false",
+        "complete": "false",
+        "x": 750,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "ddcb0746.36dfd8",
+        "type": "ui_switch",
+        "z": "90feae88.89516",
+        "name": "",
+        "label": "Switch 1",
+        "group": "bb86224a.10bcc",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "topic": "",
+        "style": "",
+        "onvalue": "1",
+        "onvalueType": "str",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "0",
+        "offvalueType": "str",
+        "officon": "",
+        "offcolor": "",
+        "x": 740,
+        "y": 140,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "ae190fc3.eddd5",
+        "type": "inject",
+        "z": "90feae88.89516",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "str",
+        "repeat": "1",
+        "crontab": "",
+        "once": false,
+        "x": 90,
+        "y": 140,
+        "wires": [
+            [
+                "5df6465d.1582a8"
+            ]
+        ]
+    },
+    {
+        "id": "bed26fe0.c108a",
+        "type": "debug",
+        "z": "90feae88.89516",
+        "name": "",
+        "active": false,
+        "console": "false",
+        "complete": "false",
+        "x": 750,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "5df6465d.1582a8",
+        "type": "exec",
+        "z": "90feae88.89516",
+        "command": "/home/pi/software/examples/rpi-gpio-ext/raspberry_pi_zero/scripts/getgpio.sh 02",
+        "addpay": true,
+        "append": "",
+        "useSpawn": false,
+        "timer": "",
+        "name": "get 02",
+        "x": 470,
+        "y": 140,
+        "wires": [
+            [
+                "bed26fe0.c108a",
+                "ddcb0746.36dfd8"
+            ],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "32078ae7.797a96",
+        "type": "ui_button",
+        "z": "90feae88.89516",
+        "name": "",
+        "group": "f92963ae.52d6a",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "label": "Position 1",
+        "color": "",
+        "bgcolor": "",
+        "icon": "",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "",
+        "x": 100,
+        "y": 1400,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "8545682.3b00a98",
+        "type": "ui_button",
+        "z": "90feae88.89516",
+        "name": "",
+        "group": "d6650ea5.92e21",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "label": "Restart FPGA",
+        "color": "",
+        "bgcolor": "",
+        "icon": "",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "",
+        "x": 120,
+        "y": 60,
+        "wires": [
+            [
+                "e1c10667.0ca768"
+            ]
+        ]
+    },
+    {
+        "id": "e1c10667.0ca768",
+        "type": "exec",
+        "z": "90feae88.89516",
+        "command": "sudo /home/pi/software/examples/mobile_rgb-led/raspberry_pi_zero/scripts/fpga-reconf.sh",
+        "addpay": false,
+        "append": "",
+        "useSpawn": "",
+        "timer": "",
+        "name": "Reconf",
+        "x": 480,
+        "y": 60,
+        "wires": [
+            [],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "b72700a5.668d8",
+        "type": "range",
+        "z": "90feae88.89516",
+        "minin": "50000",
+        "maxin": "100000",
+        "minout": "0",
+        "maxout": "100",
+        "action": "scale",
+        "round": true,
+        "name": "",
+        "x": 270,
+        "y": 1280,
+        "wires": [
+            [
+                "32bb5402.2c158c",
+                "1c297621.b4a71a"
+            ]
+        ]
+    },
+    {
+        "id": "32bb5402.2c158c",
+        "type": "debug",
+        "z": "90feae88.89516",
+        "name": "",
+        "active": false,
+        "console": "false",
+        "complete": "false",
+        "x": 490,
+        "y": 1320,
+        "wires": []
+    },
+    {
+        "id": "7c7461fc.e9793",
+        "type": "ui_text",
+        "z": "90feae88.89516",
+        "group": "2275f293.d76f7e",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "x": 730,
+        "y": 1280,
+        "wires": []
+    },
+    {
+        "id": "1c297621.b4a71a",
+        "type": "function",
+        "z": "90feae88.89516",
+        "name": "add percent",
+        "func": "var str = msg.payload;\nvar res = str + \"%\";\nvar oMsg = { payload: res };\nreturn oMsg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 490,
+        "y": 1280,
+        "wires": [
+            [
+                "7c7461fc.e9793",
+                "89ca13cb.b4d82"
+            ]
+        ]
+    },
+    {
+        "id": "89ca13cb.b4d82",
+        "type": "debug",
+        "z": "90feae88.89516",
+        "name": "",
+        "active": false,
+        "console": "false",
+        "complete": "false",
+        "x": 750,
+        "y": 1320,
+        "wires": []
+    },
+    {
+        "id": "f980af11.2c5fb",
+        "type": "ui_slider",
+        "z": "90feae88.89516",
+        "name": "",
+        "label": "Period",
+        "group": "a7645e77.18be3",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "topic": "",
+        "min": "1",
+        "max": "5",
+        "step": "1",
+        "x": 90,
+        "y": 700,
+        "wires": [
+            [
+                "182e66c5.a3ba99",
+                "4039e42e.ab930c"
+            ]
+        ]
+    },
+    {
+        "id": "9df654a0.9e4178",
+        "type": "ui_slider",
+        "z": "90feae88.89516",
+        "name": "",
+        "label": "Duty Cycle",
+        "group": "a7645e77.18be3",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "topic": "",
+        "min": "0",
+        "max": "100",
+        "step": "1",
+        "x": 110,
+        "y": 820,
+        "wires": [
+            [
+                "255ac222.22040e",
+                "9dacbe8c.9db09"
+            ]
+        ]
+    },
+    {
+        "id": "255ac222.22040e",
+        "type": "function",
+        "z": "90feae88.89516",
+        "name": "add percent",
+        "func": "var str = msg.payload;\nvar res = str + \"%\";\nvar oMsg = { payload: res };\nreturn oMsg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 490,
+        "y": 880,
+        "wires": [
+            [
+                "f64114e2.6b7968"
+            ]
+        ]
+    },
+    {
+        "id": "f64114e2.6b7968",
+        "type": "ui_text",
+        "z": "90feae88.89516",
+        "group": "a7645e77.18be3",
+        "order": 4,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "x": 730,
+        "y": 880,
+        "wires": []
+    },
+    {
+        "id": "736d4ec3.07ab4",
+        "type": "ui_text",
+        "z": "90feae88.89516",
+        "group": "a7645e77.18be3",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "x": 470,
+        "y": 760,
+        "wires": []
+    },
+    {
+        "id": "182e66c5.a3ba99",
+        "type": "range",
+        "z": "90feae88.89516",
+        "minin": "1",
+        "maxin": "5",
+        "minout": "50000000",
+        "maxout": "250000000",
+        "action": "scale",
+        "round": true,
+        "name": "",
+        "x": 270,
+        "y": 700,
+        "wires": [
+            [
+                "16fe548e.6b406b"
+            ]
+        ]
+    },
+    {
+        "id": "4039e42e.ab930c",
+        "type": "function",
+        "z": "90feae88.89516",
+        "name": "add sec",
+        "func": "var str = msg.payload;\nvar res = str + \"s\";\nvar oMsg = { payload: res };\nreturn oMsg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 280,
+        "y": 760,
+        "wires": [
+            [
+                "736d4ec3.07ab4"
+            ]
+        ]
+    },
+    {
+        "id": "3d4567c8.d86f48",
+        "type": "function",
+        "z": "90feae88.89516",
+        "name": "Merge the two",
+        "func": "context.data = context.data || {};\n\nswitch (msg.topic) {\n    case \"period\":\n        context.data.period = msg.payload;\n        msg = null;\n        break;\n    case \"dutycycle\":\n        context.data.dutycycle = msg.payload;\n        msg = null;\n        break;\n    default:\n        msg = null;\n    \tbreak;\n}\n\nif(context.data.period != null && context.data.dutycycle != null ) {\n\tmsg2 = {};\n\n\tvar period = context.data.period;\n    var pulse = context.data.period * context.data.dutycycle / 100;\n\n    var periodHexShort = period.toString(16);\n    var periodHexLong = \"0000000000\" + periodHexShort;\n    var periodHex = periodHexLong.slice(-8);\n\n    var pulseHexShort = pulse.toString(16);\n    var pulseHexLong = \"0000000000\" + pulseHexShort;\n    var pulseHex = pulseHexLong.slice(-8);\n\n    msg2.payload = periodHex + \" \" + pulseHex;\n\n    //context.data=null;\n\treturn msg2;\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 760,
+        "y": 700,
+        "wires": [
+            [
+                "fee3670a.86f8e8",
+                "a209782a.b9e248",
+                "a0703ab5.dd9918",
+                "4f31deae.ef2f"
+            ]
+        ]
+    },
+    {
+        "id": "16fe548e.6b406b",
+        "type": "function",
+        "z": "90feae88.89516",
+        "name": "period",
+        "func": "msg.topic=\"period\";\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 470,
+        "y": 700,
+        "wires": [
+            [
+                "3d4567c8.d86f48"
+            ]
+        ]
+    },
+    {
+        "id": "9dacbe8c.9db09",
+        "type": "function",
+        "z": "90feae88.89516",
+        "name": "dutycycle",
+        "func": "msg.topic=\"dutycycle\";\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 480,
+        "y": 820,
+        "wires": [
+            [
+                "3d4567c8.d86f48"
+            ]
+        ]
+    },
+    {
+        "id": "fee3670a.86f8e8",
+        "type": "debug",
+        "z": "90feae88.89516",
+        "name": "",
+        "active": false,
+        "console": "false",
+        "complete": "false",
+        "x": 990,
+        "y": 760,
+        "wires": []
+    },
+    {
+        "id": "a209782a.b9e248",
+        "type": "exec",
+        "z": "90feae88.89516",
+        "command": "/home/pi/software/examples/rpi-gpio-ext/raspberry_pi_zero/scripts/setpwm.sh 39",
+        "addpay": true,
+        "append": "",
+        "useSpawn": "",
+        "timer": "",
+        "name": "setpwm 39",
+        "x": 990,
+        "y": 700,
+        "wires": [
+            [
+                "120d6fb2.ab552"
+            ],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "120d6fb2.ab552",
+        "type": "debug",
+        "z": "90feae88.89516",
+        "name": "",
+        "active": false,
+        "console": "false",
+        "complete": "false",
+        "x": 1210,
+        "y": 700,
+        "wires": []
+    },
+    {
+        "id": "4d12f7b7.252608",
+        "type": "ui_button",
+        "z": "90feae88.89516",
+        "name": "",
+        "group": "f92963ae.52d6a",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "label": "Position 2",
+        "color": "",
+        "bgcolor": "",
+        "icon": "",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "",
+        "x": 99,
+        "y": 1455,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "dff2e969.e71e58",
+        "type": "ui_button",
+        "z": "90feae88.89516",
+        "name": "",
+        "group": "f92963ae.52d6a",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "label": "Position 3",
+        "color": "",
+        "bgcolor": "",
+        "icon": "",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "",
+        "x": 100,
+        "y": 1520,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "58471b6a.6b1704",
+        "type": "ui_colour_picker",
+        "z": "90feae88.89516",
+        "name": "",
+        "label": "Color 1",
+        "group": "3cff295.9f4a0d6",
+        "format": "hex",
+        "outformat": "string",
+        "showSwatch": true,
+        "showPicker": false,
+        "showValue": false,
+        "showAlpha": false,
+        "showLightness": true,
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "topic": "",
+        "x": 100,
+        "y": 460,
+        "wires": [
+            [
+                "15f76340.67043d"
+            ]
+        ]
+    },
+    {
+        "id": "15f76340.67043d",
+        "type": "function",
+        "z": "90feae88.89516",
+        "name": "slice hash",
+        "func": "var oMsg = { payload: msg.payload.slice(1) };\nreturn oMsg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 280,
+        "y": 460,
+        "wires": [
+            [
+                "274abf11.6c9d4"
+            ]
+        ]
+    },
+    {
+        "id": "274abf11.6c9d4",
+        "type": "exec",
+        "z": "90feae88.89516",
+        "command": "/home/pi/software/examples/rpi-gpio-ext/raspberry_pi_zero/scripts/sendrgb.sh 39 37 35",
+        "addpay": true,
+        "append": "",
+        "useSpawn": "",
+        "timer": "",
+        "name": "sendrgb 39:37:35",
+        "x": 510,
+        "y": 460,
+        "wires": [
+            [
+                "4ebe7c13.2bbe44"
+            ],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "a327331e.23a84",
+        "type": "exec",
+        "z": "90feae88.89516",
+        "command": "/home/pi/software/examples/rpi-gpio-ext/raspberry_pi_zero/scripts/setgpio.sh 39 00",
+        "addpay": false,
+        "append": "",
+        "useSpawn": "",
+        "timer": "",
+        "name": "clear 39",
+        "x": 480,
+        "y": 300,
+        "wires": [
+            [
+                "12725ef6.7944e1"
+            ],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "d7b590bd.782cb",
+        "type": "exec",
+        "z": "90feae88.89516",
+        "command": "/home/pi/software/examples/rpi-gpio-ext/raspberry_pi_zero/scripts/setgpio.sh 35 00",
+        "addpay": false,
+        "append": "",
+        "useSpawn": "",
+        "timer": "",
+        "name": "clear 35",
+        "x": 480,
+        "y": 240,
+        "wires": [
+            [
+                "12725ef6.7944e1"
+            ],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "4f31deae.ef2f",
+        "type": "exec",
+        "z": "90feae88.89516",
+        "command": "/home/pi/software/examples/rpi-gpio-ext/raspberry_pi_zero/scripts/setgpio.sh 35 00",
+        "addpay": false,
+        "append": "",
+        "useSpawn": "",
+        "timer": "",
+        "name": "clear 35",
+        "x": 980,
+        "y": 580,
+        "wires": [
+            [
+                "120d6fb2.ab552"
+            ],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "a0703ab5.dd9918",
+        "type": "exec",
+        "z": "90feae88.89516",
+        "command": "/home/pi/software/examples/rpi-gpio-ext/raspberry_pi_zero/scripts/setgpio.sh 37 00",
+        "addpay": false,
+        "append": "",
+        "useSpawn": "",
+        "timer": "",
+        "name": "clear 37",
+        "x": 980,
+        "y": 640,
+        "wires": [
+            [
+                "120d6fb2.ab552"
+            ],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "da54c4f9.f80688",
+        "type": "ui_button",
+        "z": "90feae88.89516",
+        "name": "",
+        "group": "d323ac3b.5f107",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "label": "Start",
+        "color": "",
+        "bgcolor": "",
+        "icon": "",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "",
+        "x": 90,
+        "y": 1000,
+        "wires": [
+            [
+                "574676cd.db35a8",
+                "ca328f89.45299",
+                "fc2a158f.b94d28"
+            ]
+        ]
+    },
+    {
+        "id": "574676cd.db35a8",
+        "type": "exec",
+        "z": "90feae88.89516",
+        "command": "/home/pi/software/examples/rpi-gpio-ext/raspberry_pi_zero/scripts/setpwm.sh 35 0505E100 047868C0",
+        "addpay": true,
+        "append": "",
+        "useSpawn": "",
+        "timer": "",
+        "name": "setpwm 35",
+        "x": 490,
+        "y": 940,
+        "wires": [
+            [
+                "c3a436e4.af67d8"
+            ],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "ca328f89.45299",
+        "type": "exec",
+        "z": "90feae88.89516",
+        "command": "/home/pi/software/examples/rpi-gpio-ext/raspberry_pi_zero/scripts/setpwm.sh 37 0565E100 017D7840",
+        "addpay": false,
+        "append": "",
+        "useSpawn": "",
+        "timer": "",
+        "name": "setpwm 37",
+        "x": 490,
+        "y": 1000,
+        "wires": [
+            [
+                "c3a436e4.af67d8"
+            ],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "fc2a158f.b94d28",
+        "type": "exec",
+        "z": "90feae88.89516",
+        "command": "/home/pi/software/examples/rpi-gpio-ext/raspberry_pi_zero/scripts/setpwm.sh 39 05F5E100 02FAF080",
+        "addpay": false,
+        "append": "",
+        "useSpawn": "",
+        "timer": "",
+        "name": "setpwm 39",
+        "x": 490,
+        "y": 1060,
+        "wires": [
+            [
+                "c3a436e4.af67d8"
+            ],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "c3a436e4.af67d8",
+        "type": "debug",
+        "z": "90feae88.89516",
+        "name": "",
+        "active": false,
+        "console": "false",
+        "complete": "false",
+        "x": 750,
+        "y": 1000,
+        "wires": []
+    },
+    {
+        "id": "e42511cf.1710c",
+        "type": "ui_template",
+        "z": "90feae88.89516",
+        "group": "d6650ea5.92e21",
+        "name": "Logo",
+        "order": 1,
+        "width": "6",
+        "height": "2",
+        "format": "<div ng-bind-html=\"msg.payload\"></div>\n\n<img src=\"logo_trac.png\" />\n",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "x": 730,
+        "y": 60,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "3cff295.9f4a0d6",
+        "type": "ui_group",
+        "z": "",
+        "name": "RGB LEDs",
+        "tab": "2b28b91c.16e9f6",
+        "order": 5,
+        "disp": true,
+        "width": "6"
+    },
+    {
+        "id": "2275f293.d76f7e",
+        "type": "ui_group",
+        "z": "",
+        "name": "Single Servo",
+        "tab": "2b28b91c.16e9f6",
+        "order": 7,
+        "disp": true,
+        "width": "6"
+    },
+    {
+        "id": "22e66ec1.490cd2",
+        "type": "ui_group",
+        "z": "",
+        "name": "Binary Outputs",
+        "tab": "2b28b91c.16e9f6",
+        "order": 3,
+        "disp": true,
+        "width": "6"
+    },
+    {
+        "id": "bb86224a.10bcc",
+        "type": "ui_group",
+        "z": "",
+        "name": "Inputs",
+        "tab": "2b28b91c.16e9f6",
+        "order": 2,
+        "disp": true,
+        "width": "6"
+    },
+    {
+        "id": "f92963ae.52d6a",
+        "type": "ui_group",
+        "z": "",
+        "name": "Multiple Servos",
+        "tab": "2b28b91c.16e9f6",
+        "order": 8,
+        "disp": true,
+        "width": "6"
+    },
+    {
+        "id": "d6650ea5.92e21",
+        "type": "ui_group",
+        "z": "",
+        "name": "General",
+        "tab": "2b28b91c.16e9f6",
+        "order": 1,
+        "disp": false,
+        "width": "6"
+    },
+    {
+        "id": "a7645e77.18be3",
+        "type": "ui_group",
+        "z": "",
+        "name": "Blink LED",
+        "tab": "2b28b91c.16e9f6",
+        "order": 4,
+        "disp": true,
+        "width": "6"
+    },
+    {
+        "id": "d323ac3b.5f107",
+        "type": "ui_group",
+        "z": "",
+        "name": "Light Show",
+        "tab": "2b28b91c.16e9f6",
+        "order": 6,
+        "disp": true,
+        "width": "6"
+    },
+    {
+        "id": "2b28b91c.16e9f6",
+        "type": "ui_tab",
+        "z": "",
+        "name": "GPIO Extension",
+        "icon": "dashboard"
+    }
+]
