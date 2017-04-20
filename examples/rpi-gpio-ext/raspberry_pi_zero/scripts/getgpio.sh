@@ -13,4 +13,4 @@ val=${valfull:5:1}
 #echo "Value full: $valfull"
 #echo "Value:      $val"
 
-echo "$val"
+echo -n "$val"
