@@ -1,11 +1,16 @@
 #!/bin/bash
 
-red=${1:0:2}
-green=${1:2:2}
-blue=${1:4:2}
+redid=$1
+greenid=$2
+blueid=$3
 
-#echo "Color: $red $green $blue"
+redval=${4:0:2}
+greenval=${4:2:2}
+blueval=${4:4:2}
 
-echo -ne "\x3F\x02\x00\x00\xFF\x00\x00\x00\x$red\x00" > /dev/spidev0.3
-echo -ne "\x3D\x02\x00\x00\xFF\x00\x00\x00\x$green\x00" > /dev/spidev0.3
-echo -ne "\x3C\x02\x00\x00\xFF\x00\x00\x00\x$blue\x00" > /dev/spidev0.3
+#echo "IDs: $redid $greenid $blueid"
+#echo "Color: $redval $greenval $blueval"
+
+echo -ne "\x$redid\x02\x00\x00\xFF\x00\x00\x00\x$redval\x00" > /dev/spidev0.3
+echo -ne "\x$greenid\x02\x00\x00\xFF\x00\x00\x00\x$greenval\x00" > /dev/spidev0.3
+echo -ne "\x$blueid\x02\x00\x00\xFF\x00\x00\x00\x$blueval\x00" > /dev/spidev0.3
