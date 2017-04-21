@@ -1,8 +1,8 @@
 #!/bin/bash
 
-redid=$1
-greenid=$2
-blueid=$3
+redid=$(printf "%02x" $1)
+greenid=$(printf "%02x" $2)
+blueid=$(printf "%02x" $3)
 
 redval=${4:0:2}
 greenval=${4:2:2}
