@@ -5,7 +5,7 @@ import spidev
 
 spi = spidev.SpiDev()
 spi.open(0, 3)
-spi.max_speed_hz=10000000
+spi.max_speed_hz=5000000
 
 argc = len(sys.argv)
 
