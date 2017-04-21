@@ -1,10 +1,12 @@
 #!/bin/bash
 
-id=$1
-val3=${2:0:2}
-val2=${2:2:2}
-val1=${2:4:2}
-val0=${2:6:2}
+id=$(printf "%02x" $1)
+
+vhex=$(printf "%08x" $2)
+val3=${vhex:0:2}
+val2=${vhex:2:2}
+val1=${vhex:4:2}
+val0=${vhex:6:2}
 
 #echo "Servo ID: $id"
 #echo "Value: $val3 $val2 $val1 $val0"
