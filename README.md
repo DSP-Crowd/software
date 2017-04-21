@@ -16,7 +16,9 @@ Software for the Raspberry Pi to DE0 Nano connector
 
 ## Initial setup ##
 
-The following steps must be done only once
+The following steps must be done only once.
+
+Note: This readme will be updated in the near future.
 
 ### Power up the system ###
 1. Connect an USB Micro B cable to the connector board. We recommend the official Raspberry Pi power supply as source
