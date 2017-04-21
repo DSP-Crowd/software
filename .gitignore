@@ -97,7 +97,7 @@ synopsys/
 *.dtbo
 
 # ignore binary files
-*.bin
+#*.bin
 *.sld
 
 # ignore modelsim temp files
