@@ -1,10 +1,10 @@
 #!/bin/bash
 
-id=$1
+id=$(printf "%02x" $1)
 
 #echo "GPIO ID: $id"
 
-script=$(dirname $0)/spiarray.py
+script=$(dirname $0)/../../../../_install/r_pi/scripts/spiarray.py
 #echo "Script: $script"
 
 valfull=$(python $script $id 00 00)
