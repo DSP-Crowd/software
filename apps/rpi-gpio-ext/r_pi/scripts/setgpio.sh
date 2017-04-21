@@ -1,7 +1,7 @@
 #!/bin/bash
 
-id=$1
-val=$2
+id=$(printf "%02x" $1)
+val=$(printf "%02x" $2)
 
 #echo "GPIO ID: $id"
 #echo "Value: $val"
