@@ -1606,27 +1606,25 @@
         "passthru": true,
         "options": [
             {
-                "label": "Hello World",
-                "value": "",
-                "type": "str"
-            },
-            {
                 "label": "RGB LED",
-                "value": "",
+                "value": "mobile_rgb-led",
                 "type": "str"
             },
             {
                 "label": "GPIO Extension",
-                "value": "",
+                "value": "rpi-gpio-ext",
                 "type": "str"
             }
         ],
         "payload": "",
         "topic": "",
-        "x": 90,
-        "y": 240,
+        "x": 310,
+        "y": 300,
         "wires": [
-            []
+            [
+                "95b59c7b.298e9",
+                "13c890b2.2c525f"
+            ]
         ]
     },
     {
@@ -1642,45 +1640,42 @@
         "color": "",
         "bgcolor": "",
         "icon": "",
-        "payload": "",
-        "payloadType": "str",
-        "topic": "",
+        "payload": "-1",
+        "payloadType": "num",
+        "topic": "submit",
         "x": 110,
-        "y": 300,
+        "y": 340,
         "wires": [
-            []
-        ]
-    },
-    {
-        "id": "8b6b6b18.ff8298",
-        "type": "function",
-        "z": "1612957d.39ed4b",
-        "name": "Merge the two",
-        "func": "context.data = context.data || {};\n\nswitch (msg.topic) {\n    case \"period\":\n        context.data.period = msg.payload;\n        msg = null;\n        break;\n    case \"dutycycle\":\n        context.data.dutycycle = msg.payload;\n        msg = null;\n        break;\n    default:\n        msg = null;\n    \tbreak;\n}\n\nif(context.data.period != null && context.data.dutycycle != null ) {\n\tmsg2 = {};\n\n\tvar period = context.data.period;\n    var pulse = context.data.period * context.data.dutycycle / 100;\n\n    var periodHexShort = period.toString(16);\n    var periodHexLong = \"0000000000\" + periodHexShort;\n    var periodHex = periodHexLong.slice(-8);\n\n    var pulseHexShort = pulse.toString(16);\n    var pulseHexLong = \"0000000000\" + pulseHexShort;\n    var pulseHex = pulseHexLong.slice(-8);\n\n    msg2.payload = periodHex + \" \" + pulseHex;\n\n    //context.data=null;\n\treturn msg2;\n}",
-        "outputs": 1,
-        "noerr": 0,
-        "x": 420,
-        "y": 260,
-        "wires": [
-            []
+            [
+                "1c254915.9fd5c7",
+                "c7d937ee.bbd678",
+                "57a16bd6.eacb14"
+            ]
         ]
     },
     {
         "id": "43326e91.81f48",
         "type": "exec",
         "z": "1612957d.39ed4b",
-        "command": "sudo /home/pi/software/examples/mobile_rgb-led/raspberry_pi_zero/scripts/update-fpga.sh",
-        "addpay": false,
-        "append": "/home/pi/software/_hello-world/de0_nano/output/rr_base.bin",
-        "useSpawn": "",
+        "command": "sudo /home/pi/.dsp-crowd/software/_install/r_pi/scripts/update-fpga.sh",
+        "addpay": true,
+        "append": "",
+        "useSpawn": true,
         "timer": "",
-        "name": "File Slow",
-        "x": 680,
-        "y": 260,
+        "name": "Update FPGA",
+        "x": 790,
+        "y": 300,
         "wires": [
-            [],
-            [],
-            []
+            [
+                "1b01969c.b39209"
+            ],
+            [
+                "1b01969c.b39209"
+            ],
+            [
+                "57a16bd6.eacb14",
+                "1b01969c.b39209"
+            ]
         ]
     },
     {
@@ -1771,13 +1766,13 @@
         "id": "8cf63071.51162",
         "type": "exec",
         "z": "90feae88.89516",
-        "command": "/home/pi/.dsp-crowd/software/apps/rpi-gpio-ext/r_pi/scripts/dimled.sh 55",
+        "command": "/home/pi/.dsp-crowd/software/apps/rpi-gpio-ext/r_pi/scripts/dimled.sh 53",
         "addpay": true,
         "append": "",
         "useSpawn": "",
         "timer": "",
-        "name": "dim led 55",
-        "x": 490,
+        "name": "dim led 53",
+        "x": 480,
         "y": 740,
         "wires": [
             [],
@@ -1858,12 +1853,12 @@
         "id": "a8a83f9b.e3db7",
         "type": "exec",
         "z": "90feae88.89516",
-        "command": "/home/pi/.dsp-crowd/software/apps/rpi-gpio-ext/r_pi/scripts/setgpio.sh 53 00",
+        "command": "/home/pi/.dsp-crowd/software/apps/rpi-gpio-ext/r_pi/scripts/setgpio.sh 55 00",
         "addpay": false,
         "append": "",
         "useSpawn": "",
         "timer": "",
-        "name": "clear 53",
+        "name": "clear 55",
         "x": 480,
         "y": 620,
         "wires": [
@@ -1871,5 +1866,140 @@
             [],
             []
         ]
+    },
+    {
+        "id": "57a16bd6.eacb14",
+        "type": "function",
+        "z": "1612957d.39ed4b",
+        "name": "Map Return Code",
+        "func": "if(msg.payload < 0)\n    msg.payload = \"Pending\";\nelse\nif(msg.payload == 0)\n    msg.payload = \"OK\";\nelse\n    msg.payload = \"FAILED (\" + msg.payload + \")\";\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1030,
+        "y": 340,
+        "wires": [
+            [
+                "ab67f9f7.a59688"
+            ]
+        ]
+    },
+    {
+        "id": "ab67f9f7.a59688",
+        "type": "ui_text",
+        "z": "1612957d.39ed4b",
+        "group": "b75ee76a.174068",
+        "order": 5,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Status:",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "x": 1190,
+        "y": 340,
+        "wires": []
+    },
+    {
+        "id": "16691481.412bbb",
+        "type": "inject",
+        "z": "1612957d.39ed4b",
+        "name": "",
+        "topic": "",
+        "payload": "0",
+        "payloadType": "num",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "x": 770,
+        "y": 380,
+        "wires": [
+            [
+                "57a16bd6.eacb14"
+            ]
+        ]
+    },
+    {
+        "id": "f584e6ec.5c3b18",
+        "type": "inject",
+        "z": "1612957d.39ed4b",
+        "name": "",
+        "topic": "",
+        "payload": "3",
+        "payloadType": "num",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "x": 770,
+        "y": 420,
+        "wires": [
+            [
+                "57a16bd6.eacb14"
+            ]
+        ]
+    },
+    {
+        "id": "95b59c7b.298e9",
+        "type": "debug",
+        "z": "1612957d.39ed4b",
+        "name": "",
+        "active": false,
+        "console": "false",
+        "complete": "false",
+        "x": 530,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "1c254915.9fd5c7",
+        "type": "debug",
+        "z": "1612957d.39ed4b",
+        "name": "",
+        "active": false,
+        "console": "false",
+        "complete": "false",
+        "x": 330,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "13c890b2.2c525f",
+        "type": "function",
+        "z": "1612957d.39ed4b",
+        "name": "Create Param",
+        "func": "context.data = context.data || {};\n\nif(msg.topic == \"submit\")\n    msg.payload = context.data.file;\nelse{\n    context.data.file = \"/home/pi/.dsp-crowd/software/apps/\" + msg.payload + \"/de0_nano/output/rr_base.bin\";\n    return null;\n}\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 540,
+        "y": 300,
+        "wires": [
+            [
+                "de29df36.2523",
+                "43326e91.81f48"
+            ]
+        ]
+    },
+    {
+        "id": "de29df36.2523",
+        "type": "debug",
+        "z": "1612957d.39ed4b",
+        "name": "",
+        "active": false,
+        "console": "false",
+        "complete": "false",
+        "x": 790,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "1b01969c.b39209",
+        "type": "debug",
+        "z": "1612957d.39ed4b",
+        "name": "",
+        "active": false,
+        "console": "false",
+        "complete": "false",
+        "x": 1010,
+        "y": 240,
+        "wires": []
     }
 ]
