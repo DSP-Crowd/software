@@ -10,6 +10,11 @@ fi
 
 flash_erase ${mdev} 0 6
 dd if=${rfile} of=${mdev}
-cmp ${mdev} ${rfile}
 
-$(dirname $0)/fpga-reconf.sh
+cmp ${mdev} ${rfile} -n $(wc -c ${rfile} | cut -d " " -f 1)
+if [ $? -eq 0 ]; then
+	$(dirname $0)/fpga-reconf.sh
+	exit 0
+else
+	exit 1
+fi
