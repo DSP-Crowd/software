@@ -3,7 +3,7 @@
 mdev=/dev/mtd0
 
 if [ "$1" = "" ]; then
-	rfile=rr_base.bin
+	rfile=../../de0_nano/output/rr_base.bin
 else
 	rfile=$1
 fi
