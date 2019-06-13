@@ -54,14 +54,12 @@ architecture rtl of input_sync is
 	signal q : stages;
 begin
 
-	process(clock)
+	process(clock, n_reset_async)
 	begin
-		if(clock'event and clock = '1') then
-			if('0' = n_reset_async) then
-				q(0) <= (others => '0');
-			else
-				q(0) <= unsynced_inputs;
-			end if;
+		if(n_reset_async = '0') then
+			q(0) <= (others => '0');
+		elsif(clock'event and clock = '1') then
+			q(0) <= unsynced_inputs;
 		end if;
 	end process;
 
